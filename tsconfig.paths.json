@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@Pages/*": ["src/pages/*"],
+      "@Components/*": ["src/components/*"],
+      "@Icons/*": ["src/components/svg/icons/*"],
+      "@Pictos/*": ["src/components/svg/pictos/*"],
+      "@Svg/*": ["src/components/svg/*"],
+      "@Styles/*": ["src/styles/*"],
+      "@Structures/*": ["src/structures/*"],
+      "@Services/*": ["src/services/*"],
+      "@Utils/*": ["src/utils/*"],
+      "@Router/*": ["src/router/*"],
+      "@Variables": ["src/Variables.tsx"],
+      "@Theme": ["src/Theme.tsx"],
+      "@I18n": ["src/I18n.tsx"],
+      "@Types": ["src/types.ts"],
+      "@Hooks/*": ["src/hooks/*"],
+      "@Context/*": ["src/context/*"]
+    }
+  }
+}
