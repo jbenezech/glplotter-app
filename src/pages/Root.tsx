@@ -1,13 +1,50 @@
+import {ChannelSettings} from '@Components/ChannelSettings/ChannelSettings';
+import {FullScreenDialog} from '@Components/Dialog/FullScreenDialog';
 import {Footer} from '@Components/layout/Footer';
 import {Header} from '@Components/layout/Header';
 import {MainWindow} from '@Components/layout/MainWindow';
-import {ReactElement} from 'react';
+import {ApplicationDispatchContext} from '@Context/DispatchContext';
+import {ReactElement, useContext, useState} from 'react';
+
 export function Root(): ReactElement {
+  const {dispatch} = useContext(ApplicationDispatchContext);
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+
+  const handleKeyPress = (event: React.KeyboardEvent<HTMLDivElement>): void => {
+    const keyName = event.key;
+    if (keyName === '+') {
+      event.preventDefault();
+      dispatch({type: 'displayRate/increase', payload: {}});
+      return;
+    }
+
+    if (keyName === '-') {
+      event.preventDefault();
+      dispatch({type: 'displayRate/decrease', payload: {}});
+      return;
+    }
+  };
+
+  const handleOpenSettings = (): void => {
+    setIsSettingsOpen(true);
+  };
+
   return (
-    <div className="vw-100 vh-100 d-flex flex-column justify-content-around">
-      <Header drawingMode={'ROTATING'}></Header>
-      <MainWindow />
-      <Footer drawingMode={'ROTATING'}></Footer>
-    </div>
+    <>
+      {isSettingsOpen && (
+        <FullScreenDialog onClose={(): void => setIsSettingsOpen(false)}>
+          <ChannelSettings onComplete={(): void => setIsSettingsOpen(false)} />
+        </FullScreenDialog>
+      )}
+      <div
+        className="vw-100 vh-100 d-flex flex-column justify-content-around"
+        tabIndex={0}
+        onKeyDown={handleKeyPress}
+      >
+        <Header onSettings={handleOpenSettings} />
+        <MainWindow />
+        <Footer drawingMode={'ROTATING'} />
+      </div>
+    </>
   );
 }

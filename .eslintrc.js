@@ -14,7 +14,7 @@ module.exports = {
   settings: {
     react: {
       pragma: 'React',
-      version: '17.0',
+      version: '18.0',
     },
   },
   plugins: ['@typescript-eslint', 'react', 'react-hooks', 'prettier'],

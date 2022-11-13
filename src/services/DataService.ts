@@ -1,29 +1,28 @@
-import {DataFrame} from 'glplotter';
+import {DataFrame, Point} from 'glplotter';
+import {createContext} from 'react';
 import {data} from './input';
 
 export class DataService {
-  private onData;
   private lastX = 0;
   private interval: NodeJS.Timer | null = null;
 
-  public constructor(onData: (data: DataFrame) => void) {
-    this.onData = onData;
-  }
-
-  public listen(): void {
+  public listen(onData: (data: DataFrame) => void): void {
     //stop if we were already sending data
     this.stop();
 
     this.interval = setInterval(() => {
-      const dataFrame = [];
+      const dataFrame: Point[] = [];
       for (let index = 0; index < 50; index++) {
         dataFrame.push({x: this.lastX, y: data[this.lastX % data.length]});
         this.lastX++;
       }
-      this.onData({
-        channelId: 'ch1',
-        points: dataFrame,
-      });
+
+      ['ch1', 'ch2', 'ch3'].forEach((channel) =>
+        onData({
+          channelId: channel,
+          points: dataFrame,
+        })
+      );
     }, 50);
   }
 
@@ -33,3 +32,5 @@ export class DataService {
     }
   }
 }
+
+export const DataServiceContext = createContext<DataService>(new DataService());

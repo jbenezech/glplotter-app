@@ -1,11 +1,19 @@
-import {GLPlotter} from 'glplotter';
 import {createContext, Dispatch} from 'react';
+import {ChannelAction, ChannelsSaveActionType} from './actions/ChannelAction';
 import {
-  DisplayRateDecreaseAction,
+  DisplayRateAction,
   DisplayRateDecreaseActionType,
-  DisplayRateIncreaseAction,
   DisplayRateIncreaseActionType,
 } from './actions/DisplayRateAction';
+import {
+  DrawingModeAction,
+  DrawingModeToggleActionType,
+} from './actions/DrawingModeAction';
+import {SignalAction, SignalMoveActionType} from './actions/SignalAction';
+import {channelReducer} from './reducers/ChannelReducer';
+import {displayRateReducer} from './reducers/DisplayRateReducer';
+import {drawingModeReducer} from './reducers/DrawingModeReducer';
+import {signalReducer} from './reducers/SignalReducer';
 import {ApplicationStateType} from './StateContext';
 
 export interface ReducerAction<T, P> {
@@ -13,7 +21,11 @@ export interface ReducerAction<T, P> {
   payload: P;
 }
 
-type ApplicationAction = DisplayRateIncreaseAction | DisplayRateDecreaseAction;
+export type ApplicationAction =
+  | DisplayRateAction
+  | DrawingModeAction
+  | ChannelAction
+  | SignalAction;
 
 export type ApplicationReducerType = (
   state: ApplicationStateType,
@@ -22,25 +34,31 @@ export type ApplicationReducerType = (
 
 export const applicationReducer = (
   state: ApplicationStateType,
-  action: ApplicationAction,
-  plotter: () => GLPlotter
+  action: ApplicationAction
 ): ApplicationStateType => {
   switch (action.type) {
-    case DisplayRateIncreaseActionType: {
-      const newRate = state.displayRate + 50;
-      plotter().displayRate(newRate);
-      return {...state, displayRate: newRate};
-    }
-    case DisplayRateDecreaseActionType: {
-      const newRate = state.displayRate - 50;
-      plotter().displayRate(newRate);
-      return {...state, displayRate: newRate};
-    }
+    case DisplayRateIncreaseActionType:
+    case DisplayRateDecreaseActionType:
+      return displayRateReducer(state, action);
+
+    case DrawingModeToggleActionType:
+      return drawingModeReducer(state, action);
+
+    case SignalMoveActionType:
+      return signalReducer(state, action);
+
+    case ChannelsSaveActionType:
+      return channelReducer(state, action);
+
     default:
       return state;
   }
 };
 
-export const ApplicationDispatchContext = createContext<
-  Dispatch<ApplicationAction>
->(() => null);
+interface DispatchContextType {
+  dispatch: Dispatch<ApplicationAction>;
+}
+
+export const ApplicationDispatchContext = createContext<DispatchContextType>({
+  dispatch: () => null,
+});

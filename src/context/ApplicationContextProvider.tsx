@@ -1,6 +1,6 @@
-import {useGlPlotter} from '@Hooks/useGlPlotter';
-import {ReactElement, useReducer} from 'react';
+import {ReactElement, useMemo, useReducer} from 'react';
 import {
+  ApplicationAction,
   ApplicationDispatchContext,
   applicationReducer,
   ApplicationReducerType,
@@ -17,21 +17,21 @@ interface ProviderProps {
 
 const init = (state: ApplicationStateType): ApplicationStateType => state;
 
-export function ApplicationStateProvider({
+export function ApplicationContextProvider({
   children,
 }: ProviderProps): ReactElement {
-  const {plotter} = useGlPlotter();
+  const reducer = useMemo((): ApplicationReducerType => {
+    return (state: ApplicationStateType, action: ApplicationAction) =>
+      applicationReducer(state, action);
+  }, []);
+
   const [state, dispatch] = useReducer<
     ApplicationReducerType,
     ApplicationStateType
-  >(
-    (action, state) => applicationReducer(action, state, plotter),
-    InitialApplicationState,
-    init
-  );
+  >(reducer, InitialApplicationState, init);
 
   return (
-    <ApplicationDispatchContext.Provider value={dispatch}>
+    <ApplicationDispatchContext.Provider value={{dispatch}}>
       <ApplicationStateContext.Provider value={state}>
         {children}
       </ApplicationStateContext.Provider>

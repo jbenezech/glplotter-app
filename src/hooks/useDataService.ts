@@ -1,12 +1,6 @@
-import {DataService} from '@Services/DataService';
-import {DataFrame} from 'glplotter';
-import {useMemo} from 'react';
+import {DataService, DataServiceContext} from '@Services/DataService';
+import {useContext} from 'react';
 
-interface DataServiceHookProps {
-  onData: (data: DataFrame) => void;
-}
-
-export const useDataService = ({onData}: DataServiceHookProps): DataService => {
-  const service = useMemo(() => new DataService(onData), [onData]);
-  return service;
+export const useDataService = (): DataService => {
+  return useContext<DataService>(DataServiceContext);
 };

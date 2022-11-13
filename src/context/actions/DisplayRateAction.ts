@@ -13,3 +13,7 @@ export type DisplayRateDecreaseAction = ReducerAction<
   typeof DisplayRateDecreaseActionType,
   DisplayRateDecreasePayload
 >;
+
+export type DisplayRateAction =
+  | DisplayRateIncreaseAction
+  | DisplayRateDecreaseAction;

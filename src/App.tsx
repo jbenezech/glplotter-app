@@ -14,7 +14,7 @@ import {
   ThemeProvider,
 } from '@mui/material/styles';
 import {StylesProvider} from '@mui/styles';
-import {ApplicationStateProvider} from './context/ApplicationContextProvider';
+import {ApplicationContextProvider} from '@Context/ApplicationContextProvider';
 
 const theme: Theme = responsiveFontSizes(
   createTheme({
@@ -33,6 +33,16 @@ const theme: Theme = responsiveFontSizes(
       h3: {
         fontSize: 36,
         fontWeight: 'bold',
+      },
+    },
+    components: {
+      MuiSvgIcon: {
+        styleOverrides: {
+          root: {
+            width: '2rem',
+            height: '2rem',
+          },
+        },
       },
     },
     palette: {
@@ -69,9 +79,9 @@ function App(): ReactElement {
               horizontal: 'center',
             }}
           >
-            <ApplicationStateProvider>
+            <ApplicationContextProvider>
               <AppRouter />
-            </ApplicationStateProvider>
+            </ApplicationContextProvider>
           </SnackbarProvider>
         </StylesProvider>
       </ThemeProvider>

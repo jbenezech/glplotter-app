@@ -3,11 +3,21 @@ import {ApplicationDispatchContext} from '@Context/DispatchContext';
 import {ApplicationStateContext} from '@Context/StateContext';
 import {AddCircle, RemoveCircle} from '@mui/icons-material';
 import {IconButton} from '@mui/material';
+import {createStyles, makeStyles} from '@mui/styles';
 import {ReactElement, useContext} from 'react';
+
+const useStyles = makeStyles(() =>
+  createStyles({
+    text: {
+      width: '100px',
+    },
+  })
+);
 
 export function DisplayRate(): ReactElement {
   const {displayRate} = useContext(ApplicationStateContext);
-  const dispatch = useContext(ApplicationDispatchContext);
+  const {dispatch} = useContext(ApplicationDispatchContext);
+  const classes = useStyles();
 
   const increaseDisplayRate = (): void => {
     dispatch({type: 'displayRate/increase', payload: {}});
@@ -33,7 +43,7 @@ export function DisplayRate(): ReactElement {
       >
         <RemoveCircle />
       </IconButton>
-      <Text>{`${displayRate} mm/s`}</Text>
+      <Text className={classes.text}>{`${displayRate} mm/s`}</Text>
     </div>
   );
 }
