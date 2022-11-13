@@ -9,7 +9,8 @@
     "color-hex-length": "long",
     "declaration-colon-newline-after": null,
     "value-list-comma-newline-after": null,
-    "string-quotes": "double",
-    "declaration-empty-line-before": "never"
+    "string-quotes": "single",
+    "declaration-empty-line-before": "never",
+    "import-notation": "string"
   }
 }
