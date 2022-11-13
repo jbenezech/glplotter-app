@@ -1,4 +1,4 @@
-import React, {ReactElement, useEffect} from 'react';
+import React, {ReactElement} from 'react';
 import {Dialog, IconButton} from '@mui/material';
 import {Close} from '@mui/icons-material';
 

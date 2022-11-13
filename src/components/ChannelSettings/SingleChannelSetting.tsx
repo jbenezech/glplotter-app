@@ -1,4 +1,4 @@
-import {Close, Delete} from '@mui/icons-material';
+import {Delete} from '@mui/icons-material';
 import {TextField} from '@mui/material';
 import {FormikErrors, FormikProps} from 'formik';
 import {ReactElement} from 'react';
