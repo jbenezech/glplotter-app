@@ -10,4 +10,13 @@ export type SignalMoveAction = ReducerAction<
   SignalMovePayload
 >;
 
-export type SignalAction = SignalMoveAction;
+export const SignalResizeActionType = 'signal/resize-container';
+export interface SignalResizePayload {
+  containerRect: DOMRect;
+}
+export type SignalResizeAction = ReducerAction<
+  typeof SignalResizeActionType,
+  SignalResizePayload
+>;
+
+export type SignalAction = SignalMoveAction | SignalResizeAction;

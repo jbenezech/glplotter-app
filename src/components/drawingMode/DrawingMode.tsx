@@ -15,7 +15,11 @@ export function DrawingMode(): ReactElement {
   return (
     <div className="d-flex align-items-center">
       <IconButton color="primary" component="label" onClick={toggleDrawingMode}>
-        {isRecording ? <PauseCircle /> : <PlayCircle />}
+        {isRecording ? (
+          <PauseCircle fontSize="large" />
+        ) : (
+          <PlayCircle fontSize="large" />
+        )}
       </IconButton>
     </div>
   );

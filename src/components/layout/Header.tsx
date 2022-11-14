@@ -26,7 +26,7 @@ export function Header({onSettings}: HeaderProps): ReactElement {
   return (
     <div className={`${classes.header} container-fluid gx-5 d-flex header`}>
       <IconButton color="secondary" component="label" onClick={onSettings}>
-        <SettingsInputComponent />
+        <SettingsInputComponent fontSize="large" />
       </IconButton>
       <div
         className={`${classes.controls} d-flex flex-grow-1 justify-content-around align-items-center`}

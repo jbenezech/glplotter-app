@@ -35,16 +35,6 @@ const theme: Theme = responsiveFontSizes(
         fontWeight: 'bold',
       },
     },
-    components: {
-      MuiSvgIcon: {
-        styleOverrides: {
-          root: {
-            width: '2rem',
-            height: '2rem',
-          },
-        },
-      },
-    },
     palette: {
       primary: {
         main: APP_THEME.color.custom.primary,

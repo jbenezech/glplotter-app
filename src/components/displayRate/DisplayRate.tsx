@@ -34,14 +34,14 @@ export function DisplayRate(): ReactElement {
         component="label"
         onClick={increaseDisplayRate}
       >
-        <AddCircle />
+        <AddCircle fontSize="large" />
       </IconButton>
       <IconButton
         color="primary"
         component="label"
         onClick={decreaseDisplayRate}
       >
-        <RemoveCircle />
+        <RemoveCircle fontSize="large" />
       </IconButton>
       <Text className={classes.text}>{`${displayRate} mm/s`}</Text>
     </div>

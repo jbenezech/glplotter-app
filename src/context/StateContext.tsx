@@ -11,6 +11,7 @@ export interface Signal {
   pitch: number;
   chartHeight: number;
   yPosition: number;
+  zoomRatio: number;
 }
 
 export interface Tab {
@@ -21,6 +22,7 @@ export interface Tab {
 export interface ApplicationStateType {
   displayRate: number;
   isRecording: boolean;
+  signalsContainerRect: DOMRect | null;
   tabs: Tab[];
   channels: string[];
   signals: Signal[];
@@ -29,6 +31,7 @@ export interface ApplicationStateType {
 export const InitialApplicationState: ApplicationStateType = {
   displayRate: 50,
   isRecording: true,
+  signalsContainerRect: null,
   tabs: [
     {
       id: 'c1',
@@ -47,6 +50,7 @@ export const InitialApplicationState: ApplicationStateType = {
       pitch: 1,
       chartHeight: SIGNAL_PIXEL_HEIGHT,
       yPosition: 70,
+      zoomRatio: 1,
     },
   ],
 };

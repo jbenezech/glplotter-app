@@ -53,7 +53,6 @@ export function ChannelSettings({
       channels: {id: string}[];
     }>,
     onSubmit: (values): void => {
-      console.log('Form Save');
       dispatch({
         type: 'channels/save',
         payload: {
@@ -106,8 +105,8 @@ export function ChannelSettings({
           );
         })}
       </div>
-      <IconButton className={'icons-hover w-100 mt-2 mb-3'} onClick={handleAdd}>
-        <AddCircle />
+      <IconButton className={'w-100 mt-2 mb-3'} onClick={handleAdd}>
+        <AddCircle fontSize="large" />
       </IconButton>
 
       <div className="mt-2 px-5 d-flex">

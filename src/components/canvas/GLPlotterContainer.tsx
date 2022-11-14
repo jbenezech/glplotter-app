@@ -1,6 +1,6 @@
 import {ReactElement, useCallback, useContext, useRef, useState} from 'react';
 import {makeStyles, createStyles} from '@mui/styles';
-import {useMouseMove} from '@Hooks/useMouseMove';
+import {useMouse} from '@Hooks/useMouse';
 import {ApplicationDispatchContext} from '@Context/DispatchContext';
 import {ApplicationStateContext} from '@Context/StateContext';
 import {GLPlotterComponent} from './GLPlotterComponent';
@@ -23,12 +23,13 @@ export function GLPlotterContainer(): ReactElement {
   const {dispatch} = useContext(ApplicationDispatchContext);
   const plotterService = usePlotterService();
 
-  const {handleMouseDown, handleMouseUp, handleMouseMove} = useMouseMove({
-    containerRect: containerRect,
-    onMouseDown: () =>
-      isRecording && dispatch({type: 'drawingMode/toggle', payload: {}}),
-    onMouseMove: ({movementX}) => plotterService.plotter().move(movementX),
-  });
+  const {handleMouseDown, handleMouseUp, handleMouseMove, handleMouseLeave} =
+    useMouse({
+      containerRect: containerRect,
+      onMouseDown: () =>
+        isRecording && dispatch({type: 'drawingMode/toggle', payload: {}}),
+      onMouseDrag: ({movementX}) => plotterService.plotter().move(movementX),
+    });
 
   const handleContainerRef = useCallback((container: HTMLDivElement | null) => {
     containerRef.current = container;
@@ -43,6 +44,7 @@ export function GLPlotterContainer(): ReactElement {
       onMouseDown={handleMouseDown}
       onMouseUp={handleMouseUp}
       onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
     >
       {containerRef.current && (
         <GLPlotterComponent container={containerRef.current} />

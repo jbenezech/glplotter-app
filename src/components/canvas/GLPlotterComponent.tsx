@@ -19,14 +19,12 @@ export function GLPlotterComponent({
   const dataService = useDataService();
 
   useEffect(() => {
-    console.log('attach');
     plotterService.attach(container);
     void dataService.listen((data: DataFrame) =>
       plotterService.plotter().bufferData(data)
     );
     return () => {
       try {
-        console.log('detah');
         dataService.stop();
         plotterService.detach();
       } catch (err) {

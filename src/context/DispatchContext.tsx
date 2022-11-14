@@ -9,12 +9,22 @@ import {
   DrawingModeAction,
   DrawingModeToggleActionType,
 } from './actions/DrawingModeAction';
-import {SignalAction, SignalMoveActionType} from './actions/SignalAction';
+import {
+  SignalAction,
+  SignalMoveActionType,
+  SignalResizeActionType,
+} from './actions/SignalAction';
+import {zoomReducer} from './reducers/ZoomReducer';
 import {channelReducer} from './reducers/ChannelReducer';
 import {displayRateReducer} from './reducers/DisplayRateReducer';
 import {drawingModeReducer} from './reducers/DrawingModeReducer';
 import {signalReducer} from './reducers/SignalReducer';
 import {ApplicationStateType} from './StateContext';
+import {
+  ZoomAction,
+  ZoomDecreaseActionType,
+  ZoomIncreaseActionType,
+} from './actions/ZoomAction';
 
 export interface ReducerAction<T, P> {
   type: T;
@@ -23,6 +33,7 @@ export interface ReducerAction<T, P> {
 
 export type ApplicationAction =
   | DisplayRateAction
+  | ZoomAction
   | DrawingModeAction
   | ChannelAction
   | SignalAction;
@@ -41,10 +52,15 @@ export const applicationReducer = (
     case DisplayRateDecreaseActionType:
       return displayRateReducer(state, action);
 
+    case ZoomIncreaseActionType:
+    case ZoomDecreaseActionType:
+      return zoomReducer(state, action);
+
     case DrawingModeToggleActionType:
       return drawingModeReducer(state, action);
 
     case SignalMoveActionType:
+    case SignalResizeActionType:
       return signalReducer(state, action);
 
     case ChannelsSaveActionType:

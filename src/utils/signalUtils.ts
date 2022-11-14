@@ -1,18 +1,71 @@
-import {Signal} from '@Context/StateContext';
+import {Signal, Tab} from '@Context/StateContext';
 
 export const SIGNAL_PIXEL_HEIGHT = 70;
 
 export const calculateNextSignalYPosition = (
+  containerRect: DOMRect | null,
   existingSignals: Signal[]
 ): number => {
-  const lastPos = existingSignals
-    .map((signal) => signal.yPosition)
-    .reduce((acc, current) => {
-      if (current > acc) {
-        return current;
-      }
-      return acc;
-    }, 0);
+  if (containerRect === null) {
+    return 0;
+  }
 
-  return lastPos + SIGNAL_PIXEL_HEIGHT;
+  const nbrSlots = Math.round(containerRect.height / SIGNAL_PIXEL_HEIGHT);
+  const slots = Array(nbrSlots)
+    .fill(null)
+    .map((_, index) => index * SIGNAL_PIXEL_HEIGHT + SIGNAL_PIXEL_HEIGHT / 2);
+
+  const availableSlot = slots.find((slot) => {
+    const isAvailable =
+      existingSignals.find((signal) => {
+        const signalTop = signal.yPosition - SIGNAL_PIXEL_HEIGHT / 2;
+        const signalBottom = signal.yPosition + SIGNAL_PIXEL_HEIGHT / 2;
+
+        const slotTop = slot;
+        const slotBottom = slot + SIGNAL_PIXEL_HEIGHT;
+
+        return !(slotTop > signalBottom || slotBottom < signalTop);
+      }) === undefined;
+    return isAvailable;
+  });
+
+  return availableSlot || 0;
+};
+
+export const fitSignalsInContainer = (
+  containerRect: DOMRect,
+  signals: Signal[]
+): Signal[] => {
+  const overflowingSignals = signals.filter(
+    (signal) => signal.yPosition > containerRect.height
+  );
+
+  const otherSignals = signals.filter(
+    (signal) => !overflowingSignals.includes(signal)
+  );
+
+  return [
+    ...otherSignals,
+    ...overflowingSignals.map((signal) => ({
+      ...signal,
+      yPosition: containerRect.height - SIGNAL_PIXEL_HEIGHT,
+    })),
+  ];
+};
+
+export const findSignalAtPosition = (
+  tabs: Tab[],
+  signals: Signal[],
+  positionY: number
+): Signal | undefined => {
+  const activeTab = tabs.find((tab) => !!tab.visible);
+  if (activeTab === undefined) {
+    return;
+  }
+  return signals.find(
+    (signal) =>
+      signal.containerId === activeTab.id &&
+      signal.yPosition - SIGNAL_PIXEL_HEIGHT / 2 < positionY &&
+      signal.yPosition + SIGNAL_PIXEL_HEIGHT / 2 > positionY
+  );
 };

@@ -11,7 +11,8 @@ import {
 const createSignalForTabAndChannel = (
   tab: Tab,
   channel: string,
-  existingSignals: Signal[]
+  existingSignals: Signal[],
+  containerRect: DOMRect | null
 ): Signal => {
   return {
     id: `${tab.id}-${channel}`,
@@ -22,7 +23,8 @@ const createSignalForTabAndChannel = (
     amplitude: 8,
     pitch: 1,
     chartHeight: SIGNAL_PIXEL_HEIGHT,
-    yPosition: calculateNextSignalYPosition(existingSignals),
+    zoomRatio: 1,
+    yPosition: calculateNextSignalYPosition(containerRect, existingSignals),
   };
 };
 
@@ -50,7 +52,8 @@ export const channelReducer = (
           const signal = createSignalForTabAndChannel(
             tab,
             channel,
-            newSignals.filter((signal) => signal.containerId === tab.id)
+            newSignals.filter((signal) => signal.containerId === tab.id),
+            state.signalsContainerRect
           );
           newSignals.push(signal);
         })
