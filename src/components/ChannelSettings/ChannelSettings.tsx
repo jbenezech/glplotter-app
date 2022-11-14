@@ -1,3 +1,4 @@
+import {Text} from '@Components/typography/Text';
 import {ApplicationDispatchContext} from '@Context/DispatchContext';
 import {ApplicationStateContext} from '@Context/StateContext';
 import {AddCircle, Save} from '@mui/icons-material';
@@ -88,7 +89,7 @@ export function ChannelSettings({
 
   return (
     <div className="w-75 m-auto">
-      <h1>{t('Channels')}</h1>
+      <Text variant={'h1'}>{t('Channels')}</Text>
       <div className="mt-5">
         {channelsForm.values.channels.map((channel, index) => {
           return (

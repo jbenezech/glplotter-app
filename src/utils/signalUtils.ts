@@ -64,6 +64,7 @@ export const findSignalAtPosition = (
   }
   return signals.find(
     (signal) =>
+      !!signal.visible &&
       signal.containerId === activeTab.id &&
       signal.yPosition - SIGNAL_PIXEL_HEIGHT / 2 < positionY &&
       signal.yPosition + SIGNAL_PIXEL_HEIGHT / 2 > positionY

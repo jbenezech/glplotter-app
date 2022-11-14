@@ -43,7 +43,7 @@ export function Root(): ReactElement {
       >
         <Header onSettings={handleOpenSettings} />
         <MainWindow />
-        <Footer drawingMode={'ROTATING'} />
+        <Footer />
       </div>
     </>
   );

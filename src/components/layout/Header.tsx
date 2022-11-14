@@ -24,7 +24,7 @@ export function Header({onSettings}: HeaderProps): ReactElement {
   const classes = useStyles();
 
   return (
-    <div className={`${classes.header} container-fluid gx-5 d-flex header`}>
+    <div className={`${classes.header} container-fluid gx-5 d-flex`}>
       <IconButton color="secondary" component="label" onClick={onSettings}>
         <SettingsInputComponent fontSize="large" />
       </IconButton>

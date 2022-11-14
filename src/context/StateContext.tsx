@@ -16,6 +16,7 @@ export interface Signal {
 
 export interface Tab {
   id: string;
+  position: number;
   visible: boolean;
 }
 
@@ -35,6 +36,7 @@ export const InitialApplicationState: ApplicationStateType = {
   tabs: [
     {
       id: 'c1',
+      position: 1,
       visible: true,
     },
   ],

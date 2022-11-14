@@ -12,7 +12,7 @@ export function GLPlotterComponent({
   container,
 }: GLPlotterComponentProps): ReactElement | null {
   const plotterService = usePlotterService();
-  const {displayRate, isRecording, signals} = useContext(
+  const {displayRate, isRecording, signals, tabs} = useContext(
     ApplicationStateContext
   );
 
@@ -34,8 +34,16 @@ export function GLPlotterComponent({
   }, [container, dataService, plotterService]);
 
   useEffect(() => {
-    plotterService.plotter().replaceSignals(signals);
-  }, [signals, plotterService]);
+    const activeTab = tabs.find((tab) => !!tab.visible);
+    if (!activeTab) {
+      return;
+    }
+    plotterService
+      .plotter()
+      .replaceSignals(
+        signals.filter((signal) => signal.containerId === activeTab.id)
+      );
+  }, [signals, plotterService, tabs]);
 
   useEffect(() => {
     plotterService.plotter().displayRate(displayRate);

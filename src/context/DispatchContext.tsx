@@ -25,6 +25,13 @@ import {
   ZoomDecreaseActionType,
   ZoomIncreaseActionType,
 } from './actions/ZoomAction';
+import {
+  TabAction,
+  TabCreateActionType,
+  TabSaveActionType,
+  TabShowActionType,
+} from './actions/TabAction';
+import {tabReducer} from './reducers/TabReducer';
 
 export interface ReducerAction<T, P> {
   type: T;
@@ -36,6 +43,7 @@ export type ApplicationAction =
   | ZoomAction
   | DrawingModeAction
   | ChannelAction
+  | TabAction
   | SignalAction;
 
 export type ApplicationReducerType = (
@@ -65,6 +73,11 @@ export const applicationReducer = (
 
     case ChannelsSaveActionType:
       return channelReducer(state, action);
+
+    case TabSaveActionType:
+    case TabCreateActionType:
+    case TabShowActionType:
+      return tabReducer(state, action);
 
     default:
       return state;
