@@ -7,6 +7,7 @@ import {
 } from '@Context/StateContext';
 import {usePlotterService} from '@Hooks/usePlotterService';
 import {ApplicationDispatchContext} from '@Context/DispatchContext';
+import {APP_THEME} from '@Theme';
 
 interface GLPlotterComponentProps {
   container: HTMLElement;
@@ -16,7 +17,7 @@ export function GLPlotterComponent({
   container,
 }: GLPlotterComponentProps): ReactElement | null {
   const plotterService = usePlotterService();
-  const {displayRate, isRecording, signals, tabs} = useContext(
+  const {displayRate, isRecording, signals, channels, tabs} = useContext(
     ApplicationStateContext
   );
   const {dispatch} = useContext(ApplicationDispatchContext);
@@ -48,12 +49,24 @@ export function GLPlotterComponent({
     if (!activeTab) {
       return;
     }
-    plotterService
-      .plotter()
-      .replaceSignals(
-        signals.filter((signal) => signal.containerId === activeTab.id)
-      );
-  }, [signals, plotterService, tabs]);
+
+    plotterService.plotter().replaceSignals(
+      signals
+        .filter((signal) => signal.containerId === activeTab.id)
+        .map((signal) => {
+          const channel = channels.find(
+            (channel) => channel.id === signal.channelId
+          );
+          const channelColor = channel
+            ? channel.color
+            : APP_THEME.color.default.signal;
+          return {
+            ...signal,
+            color: signal.color ? signal.color : channelColor,
+          };
+        })
+    );
+  }, [signals, plotterService, tabs, channels]);
 
   useEffect(() => {
     plotterService.plotter().displayRate(displayRate);

@@ -14,16 +14,21 @@ export const channelReducer = (
 ): ApplicationStateType => {
   switch (action.type) {
     case ChannelsSaveActionType: {
-      const addedChannels = action.payload.channels.filter(
-        (channel) => !state.channels.includes(channel)
+      const stateChannelIds = state.channels.map((channel) => channel.id);
+      const payloadChannelIds = action.payload.channels.map(
+        (channel) => channel.id
       );
-      const removedChannels = state.channels.filter(
-        (channel) => !action.payload.channels.includes(channel)
+
+      const addedChannels = action.payload.channels.filter(
+        (channel) => !stateChannelIds.includes(channel.id)
+      );
+      const removedChannelIds = stateChannelIds.filter(
+        (channel) => !payloadChannelIds.includes(channel)
       );
 
       //remove signals for which the channel has been removed
       const newSignals = state.signals.filter(
-        (signal) => !removedChannels.includes(signal.channelId)
+        (signal) => !removedChannelIds.includes(signal.channelId)
       );
 
       //add signals on each tab for the added channels

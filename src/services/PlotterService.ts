@@ -1,4 +1,3 @@
-import {InitialApplicationState} from '@Context/StateContext';
 import {GLPlotter, glplotter, GLPlotterOptions} from 'glplotter';
 import {createContext} from 'react';
 

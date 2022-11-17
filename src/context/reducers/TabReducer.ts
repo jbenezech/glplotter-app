@@ -6,7 +6,6 @@ import {
   TabShowActionType,
 } from '@Context/actions/TabAction';
 import {ApplicationStateType, Tab} from '@Context/StateContext';
-import {tabsClasses} from '@mui/material';
 import {
   calculateNextSignalYPosition,
   createSignalForTabAndChannel,
@@ -85,15 +84,13 @@ export const tabReducer = (
         const channelSignalInBase = state.signals.find(
           (signal) =>
             signal.containerId === definedBaseTab.id &&
-            signal.channelId === channel
+            signal.channelId === channel.id
         );
 
         const signal = createSignalForTabAndChannel(newTab, channel);
 
         return {
           ...signal,
-          containerId: newTabId,
-          id: `${newTabId}-${channel}`,
           visible: action.payload.fromTab
             ? channelSignalInBase?.visible || false
             : false,

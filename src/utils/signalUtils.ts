@@ -1,16 +1,16 @@
-import {Signal, Tab} from '@Context/StateContext';
+import {Channel, Signal, Tab} from '@Context/StateContext';
 
 export const SIGNAL_PIXEL_HEIGHT = 70;
 
 export const createSignalForTabAndChannel = (
   tab: Tab,
-  channel: string
+  channel: Channel
 ): Signal => {
   return {
-    id: `${tab.id}-${channel}`,
+    id: `${tab.id}-${channel.id}`,
     containerId: tab.id,
-    channelId: channel,
-    color: '#fff',
+    channelId: channel.id,
+    color: null,
     visible: tab.visible,
     amplitude: 8,
     pitch: 1,

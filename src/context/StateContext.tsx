@@ -1,3 +1,4 @@
+import {APP_THEME} from '@Theme';
 import {SIGNAL_PIXEL_HEIGHT} from '@Utils/signalUtils';
 import {GLPlotterInfo} from 'glplotter';
 import {createContext} from 'react';
@@ -6,13 +7,19 @@ export interface Signal {
   id: string;
   containerId: string;
   channelId: string;
-  color: string;
+  color: string | null;
   visible: boolean;
   amplitude: number;
   pitch: number;
   chartHeight: number;
   yPosition: number;
   zoomRatio: number;
+}
+
+export interface Channel {
+  id: string;
+  dataSource: string;
+  color: string;
 }
 
 export interface Tab {
@@ -26,7 +33,7 @@ export interface ApplicationStateType {
   isRecording: boolean;
   signalsContainerRect: DOMRect | null;
   tabs: Tab[];
-  channels: string[];
+  channels: Channel[];
   signals: Signal[];
   glInfo: GLPlotterInfo;
 }
@@ -42,13 +49,19 @@ export const InitialApplicationState: ApplicationStateType = {
       visible: true,
     },
   ],
-  channels: ['ch1'],
+  channels: [
+    {
+      id: 'ch1',
+      dataSource: 'ch1',
+      color: APP_THEME.color.default.signal,
+    },
+  ],
   signals: [
     {
       id: 'c1-ch1',
       containerId: 'c1',
       channelId: 'ch1',
-      color: '#fff',
+      color: null,
       visible: true,
       amplitude: 8,
       pitch: 1,

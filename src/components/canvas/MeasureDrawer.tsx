@@ -2,6 +2,7 @@ import {ApplicationStateContext} from '@Context/StateContext';
 import {Movement, Position, useMouse} from '@Hooks/useMouse';
 import {usePlotterService} from '@Hooks/usePlotterService';
 import {createStyles, makeStyles} from '@mui/styles';
+import {APP_THEME} from '@Theme';
 import {GLPlotter, MeasureConfig} from 'glplotter';
 import {ReactElement, useContext, useEffect, useState} from 'react';
 
@@ -66,7 +67,7 @@ const measureMapper = (measure: Measure): MeasureConfig => {
     pixelTop: measure.startY,
     timestamp: measure.startTimestamp,
     pixelWidth: measure.width,
-    color: [255, 0, 255, 1],
+    color: APP_THEME.color.default.measure,
   };
 };
 

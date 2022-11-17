@@ -14,6 +14,9 @@ export const APP_THEME = {
     },
     default: {
       separator: '#FBEAEF',
+      border: '#7298ff',
+      signal: '#DED628',
+      measure: '#8B861E',
       azure: '#00a7ff',
       white: '#ffffff',
       gallery: '#f0f0f0',

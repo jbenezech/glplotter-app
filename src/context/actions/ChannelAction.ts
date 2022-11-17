@@ -1,8 +1,9 @@
 import {ReducerAction} from '@Context/DispatchContext';
+import {Channel} from '@Context/StateContext';
 
 export const ChannelsSaveActionType = 'channels/save';
 export interface ChannelsSavePayload {
-  channels: string[];
+  channels: Channel[];
 }
 export type ChannelsSaveAction = ReducerAction<
   typeof ChannelsSaveActionType,

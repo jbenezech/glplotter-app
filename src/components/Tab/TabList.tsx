@@ -1,7 +1,7 @@
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import {ApplicationStateContext} from '@Context/StateContext';
-import {ReactElement, useContext, useEffect, useState} from 'react';
+import {ReactElement, useContext} from 'react';
 import {IconButton} from '@mui/material';
 import {AddCircle, ContentCopy, RemoveCircle} from '@mui/icons-material';
 import {ApplicationDispatchContext} from '@Context/DispatchContext';

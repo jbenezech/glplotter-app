@@ -13,6 +13,11 @@ export const validationChannels = (): yup.SchemaOf<{
       .of(
         yup.object().shape({
           id: yup.string().required(() => i18n.t('form.required')),
+          dataSource: yup
+            .string()
+            .nullable()
+            .required(() => i18n.t('form.required')),
+          color: yup.string().required(() => i18n.t('form.required')),
         })
       )
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment

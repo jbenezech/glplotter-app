@@ -1,9 +1,9 @@
 import {Text} from '@Components/typography/Text';
 import {ApplicationDispatchContext} from '@Context/DispatchContext';
-import {ApplicationStateContext} from '@Context/StateContext';
+import {ApplicationStateContext, Channel} from '@Context/StateContext';
 import {AddCircle, Save} from '@mui/icons-material';
 import {Button, Divider, IconButton} from '@mui/material';
-import {FormikValues, useFormik} from 'formik';
+import {Form, Formik, FormikProps, FormikValues} from 'formik';
 import {ReactElement, useContext} from 'react';
 import {useTranslation} from 'react-i18next';
 import * as yup from 'yup';
@@ -17,21 +17,40 @@ export interface ChannelsFormikValues extends FormikValues {
 export interface ChannelFormikValues extends FormikValues {
   key: string;
   id: string;
+  dataSource: string;
+  color: string;
 }
 
 const defaultEmptyChannel: ChannelFormikValues = {
   key: 'new',
   id: '',
+  name: '',
+  dataSource: '',
+  color: '#fff',
+};
+
+const channelToForm = (channel: Channel): ChannelFormikValues => {
+  return {
+    key: channel.id,
+    id: channel.id,
+    dataSource: channel.dataSource,
+    color: channel.color,
+  };
+};
+
+const formToChannel = (channel: ChannelFormikValues): Channel => {
+  return {
+    id: channel.id,
+    dataSource: channel.dataSource,
+    color: channel.color,
+  };
 };
 
 const buildChannelsInitialValues = (
-  channels: string[]
+  channels: Channel[]
 ): ChannelsFormikValues => {
   return {
-    channels: channels.map((channel) => ({
-      key: channel,
-      id: channel,
-    })),
+    channels: channels.map(channelToForm),
   };
 };
 
@@ -47,81 +66,91 @@ export function ChannelSettings({
   const {t} = useTranslation();
   const initialValues = buildChannelsInitialValues(channels);
 
-  const channelsForm = useFormik<ChannelsFormikValues>({
-    initialValues,
-    enableReinitialize: true,
-    validationSchema: validationChannels() as yup.SchemaOf<{
-      channels: {id: string}[];
-    }>,
-    onSubmit: (values): void => {
-      dispatch({
-        type: 'channels/save',
-        payload: {
-          channels: values.channels.map((value) => value.id),
-        },
-      });
-      onComplete();
-    },
-  });
+  const onSubmit = (values: ChannelsFormikValues): void => {
+    dispatch({
+      type: 'channels/save',
+      payload: {
+        channels: values.channels.map(formToChannel),
+      },
+    });
+    onComplete();
+  };
 
-  const handleAdd = (): void => {
+  const handleAdd = (form: FormikProps<ChannelsFormikValues>): void => {
     const channels = [
-      ...channelsForm.values.channels,
+      ...form.values.channels,
       {
         ...defaultEmptyChannel,
-        key: `${defaultEmptyChannel.key}-${
-          channelsForm.values.channels.length + 1
-        }`,
+        key: `${defaultEmptyChannel.key}-${form.values.channels.length + 1}`,
       },
     ];
-    void channelsForm.setValues({
+    void form.setValues({
       channels: channels,
     });
   };
 
-  const handleDelete = (id: string): void => {
-    void channelsForm.setValues({
-      channels: channelsForm.values.channels.filter(
-        (channel) => channel.id !== id
-      ),
+  const handleDelete = (
+    form: FormikProps<ChannelsFormikValues>,
+    id: string
+  ): void => {
+    void form.setValues({
+      channels: form.values.channels.filter((channel) => channel.id !== id),
     });
   };
 
   return (
-    <div className="w-75 m-auto">
-      <Text variant={'h1'}>{t('Channels')}</Text>
-      <div className="mt-5">
-        {channelsForm.values.channels.map((channel, index) => {
-          return (
-            <div key={channel.key}>
-              <SingleChannelSettings
-                formikProps={channelsForm}
-                formIndex={index}
-                handleDelete={(): void => handleDelete(channel.id)}
-              />
-              {index < channelsForm.values.channels.length - 1 && (
-                <Divider className={'mb-5 mt-2'} />
-              )}
-            </div>
-          );
-        })}
-      </div>
-      <IconButton className={'w-100 mt-2 mb-3'} onClick={handleAdd}>
-        <AddCircle fontSize="large" />
-      </IconButton>
+    <Formik
+      onSubmit={onSubmit}
+      initialValues={initialValues}
+      enableReinitialize={true}
+      validationSchema={
+        validationChannels() as yup.SchemaOf<{
+          channels: {id: string}[];
+        }>
+      }
+    >
+      {(formikProps: FormikProps<ChannelsFormikValues>): JSX.Element => (
+        <Form className={'w-75 m-auto'}>
+          <Text variant={'h1'}>{t('Channels')}</Text>
+          <div className="mt-5">
+            {formikProps.values.channels.map((channel, index) => {
+              return (
+                <div key={channel.key}>
+                  <SingleChannelSettings
+                    formikProps={formikProps}
+                    formIndex={index}
+                    handleDelete={(): void =>
+                      handleDelete(formikProps, channel.id)
+                    }
+                  />
+                  {index < formikProps.values.channels.length - 1 && (
+                    <Divider className={'mb-5 mt-2'} />
+                  )}
+                </div>
+              );
+            })}
+          </div>
+          <IconButton
+            className={'w-100 mt-2 mb-3'}
+            onClick={(): void => handleAdd(formikProps)}
+          >
+            <AddCircle fontSize="large" />
+          </IconButton>
 
-      <div className="mt-2 px-5 d-flex">
-        <Button
-          className={'ms-auto'}
-          startIcon={<Save />}
-          size={'large'}
-          variant={'outlined'}
-          disableElevation={true}
-          onClick={(): void => void channelsForm.submitForm()}
-        >
-          {t('save')}
-        </Button>
-      </div>
-    </div>
+          <div className="mt-2 px-5 d-flex">
+            <Button
+              className={'ms-auto'}
+              type={'submit'}
+              startIcon={<Save />}
+              size={'large'}
+              variant={'outlined'}
+              disableElevation={true}
+            >
+              {t('save')}
+            </Button>
+          </div>
+        </Form>
+      )}
+    </Formik>
   );
 }
