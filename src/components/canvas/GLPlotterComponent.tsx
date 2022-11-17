@@ -1,8 +1,12 @@
 import {useDataService} from '@Hooks/useDataService';
-import {DataFrame} from 'glplotter';
+import {DataFrame, GLPlotterInfo} from 'glplotter';
 import {ReactElement, useContext, useEffect} from 'react';
-import {ApplicationStateContext} from '@Context/StateContext';
+import {
+  ApplicationStateContext,
+  InitialApplicationState,
+} from '@Context/StateContext';
 import {usePlotterService} from '@Hooks/usePlotterService';
+import {ApplicationDispatchContext} from '@Context/DispatchContext';
 
 interface GLPlotterComponentProps {
   container: HTMLElement;
@@ -15,11 +19,17 @@ export function GLPlotterComponent({
   const {displayRate, isRecording, signals, tabs} = useContext(
     ApplicationStateContext
   );
+  const {dispatch} = useContext(ApplicationDispatchContext);
 
   const dataService = useDataService();
 
   useEffect(() => {
-    plotterService.attach(container);
+    plotterService.attach({
+      referenceContainer: container,
+      displayRate: InitialApplicationState.displayRate,
+      stateObserver: (state: GLPlotterInfo) =>
+        dispatch({type: 'gl/info', payload: {info: state}}),
+    });
     void dataService.listen((data: DataFrame) =>
       plotterService.plotter().bufferData(data)
     );
@@ -31,7 +41,7 @@ export function GLPlotterComponent({
         console.error(err);
       }
     };
-  }, [container, dataService, plotterService]);
+  }, [container, dataService, dispatch, plotterService]);
 
   useEffect(() => {
     const activeTab = tabs.find((tab) => !!tab.visible);

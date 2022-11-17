@@ -28,10 +28,13 @@ import {
 import {
   TabAction,
   TabCreateActionType,
+  TabRemoveActionType,
   TabSaveActionType,
   TabShowActionType,
 } from './actions/TabAction';
 import {tabReducer} from './reducers/TabReducer';
+import {GLAction, GLInfoActionType} from './actions/GLAction';
+import {glReducer} from './reducers/GLReducer';
 
 export interface ReducerAction<T, P> {
   type: T;
@@ -44,7 +47,8 @@ export type ApplicationAction =
   | DrawingModeAction
   | ChannelAction
   | TabAction
-  | SignalAction;
+  | SignalAction
+  | GLAction;
 
 export type ApplicationReducerType = (
   state: ApplicationStateType,
@@ -77,7 +81,11 @@ export const applicationReducer = (
     case TabSaveActionType:
     case TabCreateActionType:
     case TabShowActionType:
+    case TabRemoveActionType:
       return tabReducer(state, action);
+
+    case GLInfoActionType:
+      return glReducer(state, action);
 
     default:
       return state;

@@ -20,6 +20,15 @@ export type TabCreateAction = ReducerAction<
   TabCreatePayload
 >;
 
+export const TabRemoveActionType = 'tab/remove';
+export interface TabRemovePayload {
+  id: string;
+}
+export type TabRemoveAction = ReducerAction<
+  typeof TabRemoveActionType,
+  TabRemovePayload
+>;
+
 export const TabShowActionType = 'tab/show';
 export interface TabShowPayload {
   tabId: string;
@@ -29,4 +38,8 @@ export type TabShowAction = ReducerAction<
   TabShowPayload
 >;
 
-export type TabAction = TabSaveAction | TabCreateAction | TabShowAction;
+export type TabAction =
+  | TabSaveAction
+  | TabCreateAction
+  | TabShowAction
+  | TabRemoveAction;

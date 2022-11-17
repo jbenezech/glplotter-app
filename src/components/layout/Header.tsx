@@ -4,6 +4,7 @@ import {DisplayRate} from '@Components/displayRate/DisplayRate';
 import {DrawingMode} from '@Components/drawingMode/DrawingMode';
 import {IconButton} from '@mui/material';
 import {SettingsInputComponent} from '@mui/icons-material';
+import {Info} from './Info';
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -33,6 +34,7 @@ export function Header({onSettings}: HeaderProps): ReactElement {
       >
         <DisplayRate />
         <DrawingMode />
+        <Info />
       </div>
     </div>
   );

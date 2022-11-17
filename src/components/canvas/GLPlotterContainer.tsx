@@ -1,16 +1,15 @@
-import {ReactElement, useCallback, useContext, useRef, useState} from 'react';
+import {ReactElement, useCallback, useRef, useState} from 'react';
 import {makeStyles, createStyles} from '@mui/styles';
-import {useMouse} from '@Hooks/useMouse';
-import {ApplicationDispatchContext} from '@Context/DispatchContext';
-import {ApplicationStateContext} from '@Context/StateContext';
 import {GLPlotterComponent} from './GLPlotterComponent';
-import {usePlotterService} from '@Hooks/usePlotterService';
+import {MeasureDrawer} from './MeasureDrawer';
+import {Timeline} from './Timeline';
 
 const useStyles = makeStyles(() =>
   createStyles({
     canvas: {
       height: 'calc( 100vh - 60px - 60px)', //full window minus header and footer
       flex: 1,
+      userSelect: 'none',
     },
   })
 );
@@ -19,17 +18,6 @@ export function GLPlotterContainer(): ReactElement {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [containerRect, setContainerRect] = useState<DOMRect | null>(null);
   const classes = useStyles();
-  const {isRecording} = useContext(ApplicationStateContext);
-  const {dispatch} = useContext(ApplicationDispatchContext);
-  const plotterService = usePlotterService();
-
-  const {handleMouseDown, handleMouseUp, handleMouseMove, handleMouseLeave} =
-    useMouse({
-      containerRect: containerRect,
-      onMouseDown: () =>
-        isRecording && dispatch({type: 'drawingMode/toggle', payload: {}}),
-      onMouseDrag: ({movementX}) => plotterService.plotter().move(movementX),
-    });
 
   const handleContainerRef = useCallback((container: HTMLDivElement | null) => {
     containerRef.current = container;
@@ -40,14 +28,14 @@ export function GLPlotterContainer(): ReactElement {
     <div
       ref={handleContainerRef}
       className={`${classes.canvas} position-relative bg-dark`}
-      tabIndex={0}
-      onMouseDown={handleMouseDown}
-      onMouseUp={handleMouseUp}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
     >
       {containerRef.current && (
         <GLPlotterComponent container={containerRef.current} />
+      )}
+      {containerRect && (
+        <Timeline containerRect={containerRect}>
+          <MeasureDrawer containerRect={containerRect} />
+        </Timeline>
       )}
     </div>
   );

@@ -16,6 +16,9 @@ const useStyles = makeStyles(() =>
       width: '100px',
       textAlign: 'center',
     },
+    tabs: {
+      width: 'calc(100% - 100px)',
+    },
   })
 );
 
@@ -48,7 +51,7 @@ export function Footer(): ReactElement {
             <Visibility />
           </IconButton>
         </div>
-        <div className={'d-flex flex-grow-1 h-100'}>
+        <div className={`${classes.tabs} d-flex flex-grow-1`}>
           <TabList />
         </div>
       </div>

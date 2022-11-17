@@ -2,31 +2,11 @@ import {
   ChannelAction,
   ChannelsSaveActionType,
 } from '@Context/actions/ChannelAction';
-import {ApplicationStateType, Signal, Tab} from '@Context/StateContext';
+import {ApplicationStateType} from '@Context/StateContext';
 import {
   calculateNextSignalYPosition,
-  SIGNAL_PIXEL_HEIGHT,
+  createSignalForTabAndChannel,
 } from '@Utils/signalUtils';
-
-const createSignalForTabAndChannel = (
-  tab: Tab,
-  channel: string,
-  existingSignals: Signal[],
-  containerRect: DOMRect | null
-): Signal => {
-  return {
-    id: `${tab.id}-${channel}`,
-    containerId: tab.id,
-    channelId: channel,
-    color: '#fff',
-    visible: tab.visible,
-    amplitude: 8,
-    pitch: 1,
-    chartHeight: SIGNAL_PIXEL_HEIGHT,
-    zoomRatio: 1,
-    yPosition: calculateNextSignalYPosition(containerRect, existingSignals),
-  };
-};
 
 export const channelReducer = (
   state: ApplicationStateType,
@@ -49,11 +29,10 @@ export const channelReducer = (
       //add signals on each tab for the added channels
       addedChannels.forEach((channel) =>
         state.tabs.forEach((tab) => {
-          const signal = createSignalForTabAndChannel(
-            tab,
-            channel,
-            newSignals.filter((signal) => signal.containerId === tab.id),
-            state.signalsContainerRect
+          const signal = createSignalForTabAndChannel(tab, channel);
+          signal.yPosition = calculateNextSignalYPosition(
+            state.signalsContainerRect,
+            newSignals.filter((signal) => signal.containerId === tab.id)
           );
           newSignals.push(signal);
         })

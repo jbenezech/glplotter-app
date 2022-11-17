@@ -1,16 +1,12 @@
 import {InitialApplicationState} from '@Context/StateContext';
-import {GLPlotter, glplotter} from 'glplotter';
+import {GLPlotter, glplotter, GLPlotterOptions} from 'glplotter';
 import {createContext} from 'react';
 
 export class PlotterService {
   private _plotter: GLPlotter | null = null;
 
-  public attach(referenceContainer: HTMLElement): void {
-    const {displayRate} = InitialApplicationState;
-    this._plotter = glplotter({
-      referenceContainer,
-      displayRate: displayRate,
-    });
+  public attach(options: GLPlotterOptions): void {
+    this._plotter = glplotter(options);
   }
 
   public detach(): void {

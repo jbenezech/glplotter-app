@@ -1,4 +1,5 @@
 import {SIGNAL_PIXEL_HEIGHT} from '@Utils/signalUtils';
+import {GLPlotterInfo} from 'glplotter';
 import {createContext} from 'react';
 
 export interface Signal {
@@ -27,6 +28,7 @@ export interface ApplicationStateType {
   tabs: Tab[];
   channels: string[];
   signals: Signal[];
+  glInfo: GLPlotterInfo;
 }
 
 export const InitialApplicationState: ApplicationStateType = {
@@ -55,6 +57,10 @@ export const InitialApplicationState: ApplicationStateType = {
       zoomRatio: 1,
     },
   ],
+  glInfo: {
+    pointsPerWindow: 0,
+    gpuOverflow: false,
+  },
 };
 
 export const ApplicationStateContext = createContext<ApplicationStateType>(

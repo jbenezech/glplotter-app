@@ -2,6 +2,24 @@ import {Signal, Tab} from '@Context/StateContext';
 
 export const SIGNAL_PIXEL_HEIGHT = 70;
 
+export const createSignalForTabAndChannel = (
+  tab: Tab,
+  channel: string
+): Signal => {
+  return {
+    id: `${tab.id}-${channel}`,
+    containerId: tab.id,
+    channelId: channel,
+    color: '#fff',
+    visible: tab.visible,
+    amplitude: 8,
+    pitch: 1,
+    chartHeight: SIGNAL_PIXEL_HEIGHT,
+    zoomRatio: 1,
+    yPosition: SIGNAL_PIXEL_HEIGHT / 2,
+  };
+};
+
 export const calculateNextSignalYPosition = (
   containerRect: DOMRect | null,
   existingSignals: Signal[]
@@ -9,7 +27,7 @@ export const calculateNextSignalYPosition = (
   if (containerRect === null) {
     return 0;
   }
-
+  console.log(existingSignals);
   const nbrSlots = Math.round(containerRect.height / SIGNAL_PIXEL_HEIGHT);
   const slots = Array(nbrSlots)
     .fill(null)

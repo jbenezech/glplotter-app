@@ -37,7 +37,7 @@ export function Root(): ReactElement {
         </FullScreenDialog>
       )}
       <div
-        className="vw-100 vh-100 d-flex flex-column justify-content-around"
+        className="vw-100 vh-100 d-flex flex-column justify-content-around overflow-hidden"
         tabIndex={0}
         onKeyDown={handleKeyPress}
       >
