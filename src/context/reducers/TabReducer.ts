@@ -97,6 +97,9 @@ export const tabReducer = (
           yPosition: action.payload.fromTab
             ? channelSignalInBase?.yPosition || 0
             : 0,
+          color: action.payload.fromTab
+            ? channelSignalInBase?.color || null
+            : null,
         };
       });
 

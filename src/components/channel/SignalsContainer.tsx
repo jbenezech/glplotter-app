@@ -20,6 +20,7 @@ const useStyles = makeStyles(() =>
       height: '100%',
       width: '100px',
       borderRight: `1px solid ${APP_THEME.color.default.separator}`,
+      userSelect: 'none',
     },
   })
 );

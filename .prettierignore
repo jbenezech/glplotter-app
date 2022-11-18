@@ -2,6 +2,7 @@ tsconfig.json
 tsconfig.paths.json
 package-lock.json
 node_modules/
+.yarn/
 build/
 .idea/
 TEST*.xml
@@ -13,3 +14,4 @@ Thumbs.db
 *.flv
 *.mov
 *.wmv
+.pnp.*

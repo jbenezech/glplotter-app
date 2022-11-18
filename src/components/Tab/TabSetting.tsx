@@ -118,10 +118,11 @@ export function TabSetting({
               );
             })}
           </div>
-          <div className="mt-2 px-5 d-flex">
+          <div className="mt-5 px-5 d-flex">
             <Button
               className={'ms-auto'}
               startIcon={<Save />}
+              type={'submit'}
               size={'large'}
               variant={'outlined'}
               disableElevation={true}

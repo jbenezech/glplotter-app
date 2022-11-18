@@ -2,7 +2,6 @@ import React from 'react';
 import {ReactElement} from 'react';
 import {Typography, TypographyProps, Theme} from '@mui/material';
 import {makeStyles, createStyles} from '@mui/styles';
-import {APP_THEME} from '@Theme';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -15,41 +14,16 @@ const useStyles = makeStyles((theme: Theme) =>
     regular: {
       fontWeight: theme.typography.fontWeightRegular,
     },
-    blackCoral: {
-      color: APP_THEME.color.default.blackCoral,
-    },
-    white: {
-      color: APP_THEME.color.default.white,
-    },
-    alto: {
-      color: APP_THEME.color.default.alto,
-    },
-    gray: {
-      color: APP_THEME.color.default.gray,
-    },
-    silver: {
-      color: APP_THEME.color.default.silver,
-    },
-    dovegray: {
-      color: APP_THEME.color.default.dovegray,
-    },
   })
 );
 
 export interface TextProps extends TypographyProps {
   component?: React.ElementType;
   weight?: 'bold' | 'medium' | 'regular';
-  customColor?:
-    | 'blackCoral'
-    | 'white'
-    | 'alto'
-    | 'gray'
-    | 'silver'
-    | 'dovegray';
 }
 
 export const Text = React.forwardRef<HTMLSpanElement, TextProps>(function Text(
-  {customColor, className, weight, children, ...props}: TextProps,
+  {className, weight, children, ...props}: TextProps,
   ref
 ): ReactElement {
   const classes = useStyles();
@@ -57,9 +31,7 @@ export const Text = React.forwardRef<HTMLSpanElement, TextProps>(function Text(
     <Typography
       {...props}
       ref={ref}
-      className={`${className || ''} ${weight ? classes[weight] : ''} ${
-        customColor ? classes[customColor] : ''
-      }`}
+      className={`${className || ''} ${weight ? classes[weight] : ''}`}
     >
       {children}
     </Typography>

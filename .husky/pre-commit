@@ -1,2 +1,2 @@
 #!/bin/sh
-npx pretty-quick --staged && npx eslint src/ --ext .js,.jsx,.ts,.tsx --ignore-pattern node_modules/ --cache --fix && npx stylelint "**/*.scss" --fix
+yarn precommit
