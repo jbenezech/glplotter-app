@@ -12,16 +12,19 @@ import {Palette} from '@mui/icons-material';
 const useStyles = makeStyles(() =>
   createStyles({
     outter: {
-      height: '30px',
-      width: '30px',
+      height: '33px',
+      width: '33px',
       marginRight: '20px',
       border: '1px solid black',
       borderColor: APP_THEME.color.default.border,
+      position: 'relative',
     },
     inner: {
       width: '30px!important',
       height: '30px!important',
-      marginTop: '-1px',
+      position: 'absolute',
+      top: '0.5px',
+      left: '0.5px',
     },
   })
 );
@@ -79,20 +82,17 @@ export const ColorField = ({
       <div className={'d-flex w-100 flex-wrap justify-content-center'}>
         {field.value && (
           <div key={field.value} className={`${classes.outter} me-3`}>
+            <div className={`${classes.inner}`} onClick={handleDeleteColor} />
             <div
-              className={`${classes.inner}`}
+              className={'w-100 h-100'}
               style={{backgroundColor: field.value}}
-              onClick={handleDeleteColor}
             />
             <Text variant={'caption'} className={'w-100 text-center'}>
               {field.value}
             </Text>
           </div>
         )}
-        <Palette
-          className={`${classes.inner} mt-2`}
-          onClick={(): void => setShowPicker(true)}
-        />
+        <Palette onClick={(): void => setShowPicker(true)} />
       </div>
       {meta.touched && meta.error ? (
         <FormHelperText className={'text-center'} error={true}>

@@ -1,1 +1,24 @@
-{}
+{
+  "save": "Save",
+  "display-rate-value": "{{value}} mm/s",
+  "channel-settings": {
+    "title": "Channels",
+    "form": {
+      "id": "Identifier",
+      "data-source": "Data source"
+    },
+    "error": {
+      "unique-channel-id": "Another channel already uses this identifier."
+    }
+  },
+  "tab-settings": {
+    "title": "Tab",
+    "signals-title": "Signals",
+    "form": {
+      "id": "Identifier"
+    },
+    "error": {
+      "unique-tab-id": "Another tab already uses this identifier."
+    }
+  }
+}

@@ -5,6 +5,7 @@ import {AddCircle, RemoveCircle} from '@mui/icons-material';
 import {IconButton} from '@mui/material';
 import {createStyles, makeStyles} from '@mui/styles';
 import {ReactElement, useContext} from 'react';
+import {useTranslation} from 'react-i18next';
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -18,6 +19,7 @@ export function DisplayRate(): ReactElement {
   const {displayRate} = useContext(ApplicationStateContext);
   const {dispatch} = useContext(ApplicationDispatchContext);
   const classes = useStyles();
+  const {t} = useTranslation();
 
   const increaseDisplayRate = (): void => {
     dispatch({type: 'displayRate/increase', payload: {}});
@@ -43,7 +45,9 @@ export function DisplayRate(): ReactElement {
       >
         <RemoveCircle fontSize="large" />
       </IconButton>
-      <Text className={classes.text}>{`${displayRate} mm/s`}</Text>
+      <Text className={classes.text}>
+        {t('display-rate-value', {value: displayRate})}
+      </Text>
     </div>
   );
 }

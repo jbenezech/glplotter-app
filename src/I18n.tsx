@@ -1,13 +1,15 @@
 import i18n from 'i18next';
 import {initReactI18next} from 'react-i18next';
-import translationEn from './translations/en/common.json';
+import commonEn from './translations/en/common.json';
+import validationEn from './translations/en/validation.json';
 
 void i18n.use(initReactI18next).init({
   lng: 'en',
   debug: process.env.REACT_APP_DEBUG_MODE === 'true',
   resources: {
     en: {
-      translation: translationEn,
+      translation: commonEn,
+      validation: validationEn,
     },
   },
   interpolation: {

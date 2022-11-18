@@ -11,6 +11,7 @@ export function uniqueValidator(
     'unique',
     errorMessage,
     function (value: Record<string, unknown>[] | null | undefined) {
+      console.log(value);
       if (value === null || value === undefined) {
         return true;
       }

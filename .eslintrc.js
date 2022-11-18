@@ -61,6 +61,7 @@ module.exports = {
           'h4',
           'ul',
           '_',
+          'ns',
         ],
       },
     ],
