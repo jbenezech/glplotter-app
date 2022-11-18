@@ -1,3 +1,4 @@
+import {useTheme} from '@mui/material';
 import {ReactElement, useMemo, useReducer} from 'react';
 import {
   ApplicationAction,
@@ -24,11 +25,12 @@ export function ApplicationContextProvider({
     return (state: ApplicationStateType, action: ApplicationAction) =>
       applicationReducer(state, action);
   }, []);
+  const theme = useTheme();
 
   const [state, dispatch] = useReducer<
     ApplicationReducerType,
     ApplicationStateType
-  >(reducer, InitialApplicationState, init);
+  >(reducer, InitialApplicationState(theme), init);
 
   return (
     <ApplicationDispatchContext.Provider value={{dispatch}}>

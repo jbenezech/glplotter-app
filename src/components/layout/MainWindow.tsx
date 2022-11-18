@@ -3,17 +3,21 @@ import {SignalsContainer} from '@Components/channel/SignalsContainer';
 import {ApplicationDispatchContext} from '@Context/DispatchContext';
 import {ApplicationStateContext, Signal} from '@Context/StateContext';
 import {useMouse} from '@Hooks/useMouse';
+import {Theme, useTheme} from '@mui/material';
 import {createStyles, makeStyles} from '@mui/styles';
 import {findSignalAtPosition, SIGNAL_PIXEL_HEIGHT} from '@Utils/signalUtils';
 import {ReactElement, useCallback, useContext, useState} from 'react';
 
-const useStyles = makeStyles(() =>
+const useStyles = makeStyles((theme: Theme) =>
   createStyles({
+    main: {
+      backgroundColor: theme.colors.canvas,
+    },
     highlight: {
       position: 'absolute',
       width: '100vw',
       height: `${SIGNAL_PIXEL_HEIGHT}px`,
-      backgroundColor: 'rgba(255, 255, 255, 0.2)',
+      backgroundColor: theme.colors.signalSelection,
       pointerEvents: 'none',
     },
   })
@@ -24,7 +28,8 @@ export function MainWindow(): ReactElement {
   const [containerRect, setContainerRect] = useState<DOMRect | null>(null);
   const [selectedSignal, setSelectedSignal] = useState<Signal | undefined>();
   const {dispatch} = useContext(ApplicationDispatchContext);
-  const classes = useStyles();
+  const theme = useTheme();
+  const classes = useStyles(theme);
 
   const {handleMouseMove, handleMouseLeave, handleMouseWheel} = useMouse({
     containerRect,
@@ -56,7 +61,7 @@ export function MainWindow(): ReactElement {
   return (
     <div
       ref={handleContainerRef}
-      className={'container-fluid gx-0 d-flex position-relative'}
+      className={`${classes.main} container-fluid gx-0 d-flex position-relative`}
       tabIndex={0}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}

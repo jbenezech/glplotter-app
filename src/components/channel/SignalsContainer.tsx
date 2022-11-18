@@ -7,19 +7,19 @@ import {
   useState,
 } from 'react';
 import {makeStyles, createStyles} from '@mui/styles';
-import {APP_THEME} from '@Theme';
 import {ApplicationStateContext, Signal} from '@Context/StateContext';
 import {SignalComponent} from './SignalComponent';
 import {useMouse} from '@Hooks/useMouse';
 import {findSignalAtPosition} from '@Utils/signalUtils';
 import {ApplicationDispatchContext} from '@Context/DispatchContext';
+import {Theme, useTheme} from '@mui/material';
 
-const useStyles = makeStyles(() =>
+const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     signals: {
       height: '100%',
       width: '100px',
-      borderRight: `1px solid ${APP_THEME.color.default.separator}`,
+      borderRight: `1px solid ${theme.colors.separator}`,
       userSelect: 'none',
     },
   })
@@ -27,7 +27,8 @@ const useStyles = makeStyles(() =>
 
 export function SignalsContainer(): ReactElement {
   const containerRef = useRef<HTMLDivElement | null>(null);
-  const classes = useStyles();
+  const theme = useTheme();
+  const classes = useStyles(theme);
   const {tabs, signals, signalsContainerRect} = useContext(
     ApplicationStateContext
   );
@@ -94,7 +95,7 @@ export function SignalsContainer(): ReactElement {
 
   return (
     <div
-      className={`${classes.signals} position-relative bg-dark`}
+      className={`${classes.signals} position-relative`}
       ref={handleContainerRef}
       tabIndex={0}
       onMouseDown={handleMouseDown}

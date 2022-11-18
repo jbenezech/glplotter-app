@@ -27,7 +27,7 @@ export function GLPlotterContainer(): ReactElement {
   return (
     <div
       ref={handleContainerRef}
-      className={`${classes.canvas} position-relative bg-dark`}
+      className={`${classes.canvas} position-relative`}
     >
       {containerRef.current && (
         <GLPlotterComponent container={containerRef.current} />

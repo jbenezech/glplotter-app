@@ -4,19 +4,18 @@ import {ColorResult, PhotoshopPicker} from 'react-color';
 import {Classes} from 'reactcss';
 import {PhotoshopPickerStylesProps} from 'react-color/lib/components/photoshop/Photoshop';
 import {createStyles, makeStyles} from '@mui/styles';
-import {APP_THEME} from '@Theme';
 import {Text} from '@Components/typography/Text';
-import {FormHelperText} from '@mui/material';
+import {FormHelperText, Theme, useTheme} from '@mui/material';
 import {Palette} from '@mui/icons-material';
 
-const useStyles = makeStyles(() =>
+const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     outter: {
       height: '33px',
       width: '33px',
       marginRight: '20px',
       border: '1px solid black',
-      borderColor: APP_THEME.color.default.border,
+      borderColor: theme.colors.border,
       position: 'relative',
     },
     inner: {
@@ -45,7 +44,8 @@ export const ColorField = ({
   const {setFieldTouched, setFieldValue, handleBlur} = useFormikContext();
   const [showPicker, setShowPicker] = useState(false);
   const [color, setColor] = useState<string | undefined>();
-  const classes = useStyles();
+  const theme = useTheme();
+  const classes = useStyles(theme);
 
   const handleNewColor = (color: ColorResult): void => {
     setColor(color.hex);

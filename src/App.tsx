@@ -4,52 +4,12 @@ import '@I18n';
 import {I18nextProvider} from 'react-i18next';
 import i18next from 'i18next';
 import '@Styles/index.scss';
-import {APP_THEME} from '@Theme';
 import {setUseWhatChange} from '@simbathesailor/use-what-changed';
 import AppRouter from '@Router/AppRouter';
-import {
-  Theme,
-  createTheme,
-  responsiveFontSizes,
-  ThemeProvider,
-} from '@mui/material/styles';
+import {ThemeProvider} from '@mui/material/styles';
 import {StylesProvider} from '@mui/styles';
 import {ApplicationContextProvider} from '@Context/ApplicationContextProvider';
-
-const theme: Theme = responsiveFontSizes(
-  createTheme({
-    typography: {
-      fontFamily: ['Karla'].join(','),
-      fontWeightRegular: 400,
-      fontWeightMedium: 500,
-      fontWeightBold: 700,
-      h1: {
-        fontSize: 30,
-        fontWeight: 'bold',
-      },
-      h2: {
-        fontSize: 28,
-      },
-      h3: {
-        fontSize: 36,
-        fontWeight: 'bold',
-      },
-    },
-    palette: {
-      primary: {
-        main: APP_THEME.color.custom.primary,
-      },
-      secondary: {
-        main: APP_THEME.color.custom.secondary,
-      },
-      text: {
-        primary: APP_THEME.color.custom.font.primary,
-        secondary: APP_THEME.color.custom.font.secondary,
-        disabled: APP_THEME.color.custom.font.disabled,
-      },
-    },
-  })
-);
+import {LightTheme} from './themes';
 
 function App(): ReactElement {
   if (process.env.REACT_APP_DEBUG_MODE === 'true') {
@@ -61,7 +21,7 @@ function App(): ReactElement {
 
   return (
     <I18nextProvider i18n={i18next}>
-      <ThemeProvider theme={theme}>
+      <ThemeProvider theme={LightTheme}>
         <StylesProvider injectFirst={true}>
           <SnackbarProvider
             anchorOrigin={{

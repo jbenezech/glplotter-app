@@ -1,7 +1,9 @@
-import {APP_THEME} from '@Theme';
+import {Theme} from '@mui/material/styles';
 import {SIGNAL_PIXEL_HEIGHT} from '@Utils/signalUtils';
 import {GLPlotterInfo} from 'glplotter';
 import {createContext} from 'react';
+
+export const INITIAL_DISPLAY_RATE = 50;
 
 export interface Signal {
   id: string;
@@ -38,44 +40,46 @@ export interface ApplicationStateType {
   glInfo: GLPlotterInfo;
 }
 
-export const InitialApplicationState: ApplicationStateType = {
-  displayRate: 50,
-  isRecording: true,
-  signalsContainerRect: null,
-  tabs: [
-    {
-      id: 'c1',
-      position: 1,
-      visible: true,
+export const InitialApplicationState = (theme: Theme): ApplicationStateType => {
+  return {
+    displayRate: INITIAL_DISPLAY_RATE,
+    isRecording: true,
+    signalsContainerRect: null,
+    tabs: [
+      {
+        id: 'c1',
+        position: 1,
+        visible: true,
+      },
+    ],
+    channels: [
+      {
+        id: 'ch1',
+        dataSource: 'ch1',
+        color: theme.colors.signal,
+      },
+    ],
+    signals: [
+      {
+        id: 'c1-ch1',
+        containerId: 'c1',
+        channelId: 'ch1',
+        color: null,
+        visible: true,
+        amplitude: 8,
+        pitch: 1,
+        chartHeight: SIGNAL_PIXEL_HEIGHT,
+        yPosition: 70,
+        zoomRatio: 1,
+      },
+    ],
+    glInfo: {
+      pointsPerWindow: 0,
+      gpuOverflow: false,
     },
-  ],
-  channels: [
-    {
-      id: 'ch1',
-      dataSource: 'ch1',
-      color: APP_THEME.color.default.signal,
-    },
-  ],
-  signals: [
-    {
-      id: 'c1-ch1',
-      containerId: 'c1',
-      channelId: 'ch1',
-      color: null,
-      visible: true,
-      amplitude: 8,
-      pitch: 1,
-      chartHeight: SIGNAL_PIXEL_HEIGHT,
-      yPosition: 70,
-      zoomRatio: 1,
-    },
-  ],
-  glInfo: {
-    pointsPerWindow: 0,
-    gpuOverflow: false,
-  },
+  };
 };
 
 export const ApplicationStateContext = createContext<ApplicationStateType>(
-  InitialApplicationState
+  {} as ApplicationStateType
 );

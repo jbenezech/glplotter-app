@@ -3,11 +3,11 @@ import {DataFrame, GLPlotterInfo} from 'glplotter';
 import {ReactElement, useContext, useEffect} from 'react';
 import {
   ApplicationStateContext,
-  InitialApplicationState,
+  INITIAL_DISPLAY_RATE,
 } from '@Context/StateContext';
 import {usePlotterService} from '@Hooks/usePlotterService';
 import {ApplicationDispatchContext} from '@Context/DispatchContext';
-import {APP_THEME} from '@Theme';
+import {useTheme} from '@mui/material';
 
 interface GLPlotterComponentProps {
   container: HTMLElement;
@@ -21,13 +21,14 @@ export function GLPlotterComponent({
     ApplicationStateContext
   );
   const {dispatch} = useContext(ApplicationDispatchContext);
+  const theme = useTheme();
 
   const dataService = useDataService();
 
   useEffect(() => {
     plotterService.attach({
       referenceContainer: container,
-      displayRate: InitialApplicationState.displayRate,
+      displayRate: INITIAL_DISPLAY_RATE,
       stateObserver: (state: GLPlotterInfo) =>
         dispatch({type: 'gl/info', payload: {info: state}}),
     });
@@ -57,16 +58,14 @@ export function GLPlotterComponent({
           const channel = channels.find(
             (channel) => channel.id === signal.channelId
           );
-          const channelColor = channel
-            ? channel.color
-            : APP_THEME.color.default.signal;
+          const channelColor = channel ? channel.color : theme.colors.signal;
           return {
             ...signal,
             color: signal.color ? signal.color : channelColor,
           };
         })
     );
-  }, [signals, plotterService, tabs, channels]);
+  }, [signals, plotterService, tabs, channels, theme.colors.signal]);
 
   useEffect(() => {
     plotterService.plotter().displayRate(displayRate);

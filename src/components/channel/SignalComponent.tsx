@@ -3,13 +3,12 @@ import {makeStyles, createStyles} from '@mui/styles';
 import {Signal} from '@Context/StateContext';
 import {SIGNAL_PIXEL_HEIGHT} from '@Utils/signalUtils';
 import {Text} from '@Components/typography/Text';
-import {APP_THEME} from '@Theme';
 import {ArrowDropDown, ArrowDropUp} from '@mui/icons-material';
-import {IconButton} from '@mui/material';
+import {IconButton, Theme, useTheme} from '@mui/material';
 import {AVAILABLE_ZOOM_RATIOS} from '@Constants';
 import {ApplicationDispatchContext} from '@Context/DispatchContext';
 
-const useStyles = makeStyles(() =>
+const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     container: {
       cursor: 'pointer',
@@ -17,8 +16,8 @@ const useStyles = makeStyles(() =>
     },
     signal: {
       minWidth: '100%',
-      color: '#fff',
-      border: `1px solid ${APP_THEME.color.default.separator}`,
+      color: theme.colors.colorOnCanvas,
+      border: `1px solid ${theme.colors.separator}`,
       borderWidth: '1px 0 1px 0',
     },
     text: {
@@ -26,7 +25,7 @@ const useStyles = makeStyles(() =>
       userSelect: 'none',
     },
     filler: {
-      backgroundColor: 'rgba(255, 255, 255, 0.2)',
+      backgroundColor: theme.colors.signalSelection,
     },
   })
 );
@@ -37,7 +36,8 @@ interface SignalComponentProps {
 
 export function SignalComponent({signal}: SignalComponentProps): ReactElement {
   const {dispatch} = useContext(ApplicationDispatchContext);
-  const classes = useStyles();
+  const theme = useTheme();
+  const classes = useStyles(theme);
 
   const handleZoomIncrease = (): void => {
     dispatch({

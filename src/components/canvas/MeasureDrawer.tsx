@@ -1,10 +1,16 @@
 import {ApplicationStateContext} from '@Context/StateContext';
 import {Movement, Position, useMouse} from '@Hooks/useMouse';
 import {usePlotterService} from '@Hooks/usePlotterService';
+import {useTheme} from '@mui/material';
 import {createStyles, makeStyles} from '@mui/styles';
-import {APP_THEME} from '@Theme';
 import {GLPlotter, MeasureConfig} from 'glplotter';
-import {ReactElement, useContext, useEffect, useState} from 'react';
+import {
+  ReactElement,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -61,25 +67,29 @@ const findMeasureAtPosition = (
   });
 };
 
-const measureMapper = (measure: Measure): MeasureConfig => {
-  return {
-    id: measure.id,
-    pixelTop: measure.startY,
-    timestamp: measure.startTimestamp,
-    pixelWidth: measure.width,
-    color: APP_THEME.color.default.measure,
-  };
-};
-
 export function MeasureDrawer({
   containerRect,
 }: MeasureDrawerProps): ReactElement {
+  const theme = useTheme();
   const classes = useStyles();
   const {tabs} = useContext(ApplicationStateContext);
   const plotterService = usePlotterService();
   const [pendingMeasure, setPendingMeasure] = useState<Measure | undefined>();
   const [drawing, setDrawing] = useState(false);
   const [measures, setMeasures] = useState<Measure[]>([]);
+
+  const measureMapper = useCallback(
+    (measure: Measure): MeasureConfig => {
+      return {
+        id: measure.id,
+        pixelTop: measure.startY,
+        timestamp: measure.startTimestamp,
+        pixelWidth: measure.width,
+        color: theme.colors.measure,
+      };
+    },
+    [theme]
+  );
 
   const setMeasureInFocus = ({positionX, positionY}: Position): void => {
     const measure = findMeasureAtPosition(
@@ -155,7 +165,7 @@ export function MeasureDrawer({
     }
     plotterService.plotter().removeMeasure(pendingMeasure.id);
     plotterService.plotter().addMeasure(measureMapper(pendingMeasure));
-  }, [pendingMeasure, plotterService]);
+  }, [measureMapper, pendingMeasure, plotterService]);
 
   useEffect(() => {
     const currentTab = tabs.find((tab) => !!tab.visible);
@@ -169,7 +179,7 @@ export function MeasureDrawer({
           .filter((measure) => measure.tabId === currentTab.id)
           .map(measureMapper)
       );
-  }, [tabs, measures, plotterService]);
+  }, [tabs, measures, plotterService, measureMapper]);
 
   const {
     handleMouseDown,
