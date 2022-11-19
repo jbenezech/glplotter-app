@@ -1,10 +1,10 @@
 import {ReactElement} from 'react';
 import {makeStyles, createStyles} from '@mui/styles';
-import {DisplayRate} from '@Components/displayRate/DisplayRate';
-import {DrawingMode} from '@Components/drawingMode/DrawingMode';
 import {IconButton, Theme, useTheme} from '@mui/material';
 import {SettingsInputComponent} from '@mui/icons-material';
 import {Info} from './Info';
+import {DisplayRate} from '../displayRate/DisplayRate';
+import {DrawingMode} from '../drawingMode/DrawingMode';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

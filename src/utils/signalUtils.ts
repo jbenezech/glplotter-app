@@ -27,7 +27,7 @@ export const calculateNextSignalYPosition = (
   if (containerRect === null) {
     return 0;
   }
-  console.log(existingSignals);
+
   const nbrSlots = Math.round(containerRect.height / SIGNAL_PIXEL_HEIGHT);
   const slots = Array(nbrSlots)
     .fill(null)

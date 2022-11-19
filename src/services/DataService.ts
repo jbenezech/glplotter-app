@@ -6,7 +6,10 @@ export class DataService {
   private lastX = 0;
   private interval: NodeJS.Timer | null = null;
 
-  public listen(onData: (data: DataFrame) => void): void {
+  public listen(
+    sessionId: string | undefined,
+    onData: (data: DataFrame) => void
+  ): void {
     //stop if we were already sending data
     this.stop();
 
@@ -30,6 +33,7 @@ export class DataService {
     if (this.interval !== null) {
       clearInterval(this.interval);
     }
+    this.lastX = 0;
   }
 }
 

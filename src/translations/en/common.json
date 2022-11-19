@@ -1,6 +1,10 @@
 {
   "save": "Save",
   "display-rate-value": "{{value}} mm/s",
+  "menu": {
+    "restart": "Restart session",
+    "settings": "Settings"
+  },
   "channel-settings": {
     "title": "Channels",
     "form": {
@@ -19,6 +23,11 @@
     },
     "error": {
       "unique-tab-id": "Another tab already uses this identifier."
+    }
+  },
+  "settings": {
+    "tabs": {
+      "data-source": "Data Source"
     }
   }
 }

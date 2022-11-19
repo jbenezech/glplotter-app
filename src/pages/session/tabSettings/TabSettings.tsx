@@ -15,15 +15,15 @@ export interface TabFormikValues extends FormikValues {
   tabs: Tab[];
 }
 
-interface TabSettingProps {
+interface TabSettingsProps {
   currentTab: Tab;
   onComplete: () => void;
 }
 
-export function TabSetting({
+export function TabSettings({
   currentTab,
   onComplete,
-}: TabSettingProps): ReactElement | null {
+}: TabSettingsProps): ReactElement | null {
   const {tabs, signals} = useContext(ApplicationStateContext);
   const {dispatch} = useContext(ApplicationDispatchContext);
   const {t} = useTranslation();

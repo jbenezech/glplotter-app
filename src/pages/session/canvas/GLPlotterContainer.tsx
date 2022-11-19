@@ -3,6 +3,7 @@ import {makeStyles, createStyles} from '@mui/styles';
 import {GLPlotterComponent} from './GLPlotterComponent';
 import {MeasureDrawer} from './MeasureDrawer';
 import {Timeline} from './Timeline';
+import {GLPlotterStateComponent} from './GLPlotterStateComponent';
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -18,6 +19,7 @@ export function GLPlotterContainer(): ReactElement {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [containerRect, setContainerRect] = useState<DOMRect | null>(null);
   const classes = useStyles();
+  const [plotterReady, setPlotterReady] = useState(false);
 
   const handleContainerRef = useCallback((container: HTMLDivElement | null) => {
     containerRef.current = container;
@@ -30,12 +32,18 @@ export function GLPlotterContainer(): ReactElement {
       className={`${classes.canvas} position-relative`}
     >
       {containerRef.current && (
-        <GLPlotterComponent container={containerRef.current} />
+        <GLPlotterComponent
+          container={containerRef.current}
+          onReady={setPlotterReady}
+        />
       )}
-      {containerRect && (
-        <Timeline containerRect={containerRect}>
-          <MeasureDrawer containerRect={containerRect} />
-        </Timeline>
+      {containerRect && plotterReady && (
+        <>
+          <GLPlotterStateComponent />
+          <Timeline containerRect={containerRect}>
+            <MeasureDrawer containerRect={containerRect} />
+          </Timeline>
+        </>
       )}
     </div>
   );

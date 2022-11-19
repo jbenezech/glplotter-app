@@ -1,5 +1,3 @@
-import {GLPlotterContainer} from '@Components/canvas/GLPlotterContainer';
-import {SignalsContainer} from '@Components/channel/SignalsContainer';
 import {ApplicationDispatchContext} from '@Context/DispatchContext';
 import {ApplicationStateContext, Signal} from '@Context/StateContext';
 import {useMouse} from '@Hooks/useMouse';
@@ -7,6 +5,8 @@ import {Theme, useTheme} from '@mui/material';
 import {createStyles, makeStyles} from '@mui/styles';
 import {findSignalAtPosition, SIGNAL_PIXEL_HEIGHT} from '@Utils/signalUtils';
 import {ReactElement, useCallback, useContext, useState} from 'react';
+import {GLPlotterContainer} from './canvas/GLPlotterContainer';
+import {SignalsContainer} from './channel/SignalsContainer';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
