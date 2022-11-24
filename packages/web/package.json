@@ -4,28 +4,11 @@
   "homepage": "./react",
   "dependencies": {
     "@craco/craco": "^6.4.5",
-    "@emotion/react": "*",
-    "@emotion/styled": "*",
     "@glplotter-app/common": "*",
-    "@mui/icons-material": "*",
-    "@mui/material": "*",
-    "@mui/styles": "*",
-    "@testing-library/jest-dom": "*",
-    "@testing-library/react": "*",
-    "@testing-library/user-event": "*",
-    "bootstrap": "*",
-    "formik": "*",
-    "glplotter": "*",
-    "i18next": "*",
-    "notistack": "*",
-    "react": "*",
-    "react-color": "*",
-    "react-dom": "*",
-    "react-i18next": "*",
-    "react-router-dom": "*",
-    "react-scripts": "*",
-    "web-vitals": "^2.1.4",
-    "yup": "*"
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-scripts": "5.0.1",
+    "web-vitals": "^2.1.4"
   },
   "scripts": {
     "start": "craco start",
@@ -33,9 +16,9 @@
     "test": "craco test",
     "prebuild": "yarn run lint",
     "format": "npx prettier --write . \"{**/*,*}.{js,ts,jsx,tsx,css,scss,sass}\"",
-    "lint": "npx eslint src/ --ext .js,.jsx,.ts,.tsx --ignore-pattern node_modules/ && npx stylelint \"**/*.scss\"",
+    "lint": "npx eslint src/ --ext .js,.jsx,.ts,.tsx --ignore-pattern node_modules/",
     "lint-format": "npm run format && npm run lint",
-    "precommit": "yarn pretty-quick --staged && yarn dlx eslint src/ --ext .js,.jsx,.ts,.tsx --ignore-pattern node_modules/ --cache --fix && yarn dlx stylelint \"**/*.scss\" --fix"
+    "precommit": "yarn pretty-quick --staged && yarn dlx eslint src/ --ext .js,.jsx,.ts,.tsx --ignore-pattern node_modules/ --cache --fix"
   },
   "browserslist": {
     "production": [
@@ -50,16 +33,11 @@
     ]
   },
   "devDependencies": {
-    "@simbathesailor/use-what-changed": "^2.0.0",
-    "@types/node": "^18.11.9",
     "@types/react": "^18.0.25",
-    "@types/react-color": "^3.0.6",
     "@types/react-dom": "^18.0.9",
     "@types/react-router-dom": "^5.3.3",
-    "@types/reactcss": "^1.2.6",
     "@typescript-eslint/eslint-plugin": "^5.43.0",
     "@typescript-eslint/parser": "^5.43.0",
-    "@welldone-software/why-did-you-render": "^7.0.1",
     "craco-alias": "^3.0.1",
     "craco-babel-loader": "^1.0.3",
     "eslint": "^8.26.0",
@@ -67,7 +45,6 @@
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-react": "^7.31.10",
     "eslint-plugin-react-hooks": "latest",
-    "husky": "^8.0.1",
     "postcss": "^8.4.19",
     "postcss-scss": "^4.0.5",
     "prettier": "^2.7.1",

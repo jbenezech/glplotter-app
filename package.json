@@ -5,37 +5,14 @@
   "workspaces": [
     "packages/*"
   ],
-  "dependencies": {
-    "@emotion/react": "^11.10.5",
-    "@emotion/styled": "^11.10.5",
-    "@mui/icons-material": "^5.10.9",
-    "@mui/material": "^5.10.12",
-    "@mui/styles": "^5.10.10",
-    "@testing-library/jest-dom": "^5.16.5",
-    "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^13.5.0",
-    "bootstrap": "^5.2.2",
-    "formik": "^2.2.9",
-    "glplotter": "^0.2.0",
-    "i18next": "^22.0.4",
-    "notistack": "^2.0.8",
-    "react": "^18.2.0",
-    "react-color": "^2.19.3",
-    "react-dom": "^18.2.0",
-    "react-i18next": "^12.0.0",
-    "react-router-dom": "^6.4.3",
-    "react-scripts": "5.0.1",
-    "yup": "^0.32.11"
-  },
   "scripts": {
-    "setup": "yarn workspaces foreach run yarn install",
     "prebuild": "yarn run lint",
     "build": "lerna run build --stream",
     "lint": "lerna run lint --stream --parallel",
     "format": "lerna run format --stream --parallel",
     "lint-format": "yarn run format && yarn run lint",
     "prepare": "husky install",
-    "precommit": "lerna run precommit",
+    "precommit": "lerna run precommit --stream --parallel",
     "web:start": "concurrently -n \"Common,Web\" -c \"cyan.bold,blue.bold\" \"yarn workspace @glplotter-app/common watch\" \"yarn workspace @glplotter-app/web start\" -k"
   },
   "eslintConfig": {
@@ -54,7 +31,6 @@
     "@types/reactcss": "^1.2.6",
     "@typescript-eslint/eslint-plugin": "^5.43.0",
     "@typescript-eslint/parser": "^5.43.0",
-    "@welldone-software/why-did-you-render": "^7.0.1",
     "concurrently": "^7.6.0",
     "cross-env": "^7.0.3",
     "eslint": "^8.26.0",
