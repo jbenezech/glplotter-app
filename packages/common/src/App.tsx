@@ -10,6 +10,9 @@ import {ThemeProvider} from '@mui/material/styles';
 import {StylesProvider} from '@mui/styles';
 import {ApplicationContextProvider} from '@Context/ApplicationContextProvider';
 import {LightTheme} from './themes';
+import {registerValidators} from '@Validation/Validators';
+
+registerValidators();
 
 function App(): ReactElement {
   if (process.env.REACT_APP_DEBUG_MODE === 'true') {

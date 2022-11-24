@@ -1,0 +1,23 @@
+{
+  "extends": "../../tsconfig.build.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "composite": true,
+    "paths": {
+      "@common": ["packages/common/*"]
+    }
+  },
+  "references": [
+    { "path": "../common" }
+  ],
+  "include": [
+    "src/",
+    "src/**/*"
+  ],
+  "exclude": [
+    "public",
+    "build",
+    "node_modules",
+    "test"
+  ]
+}

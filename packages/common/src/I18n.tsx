@@ -1,7 +1,7 @@
 import i18n from 'i18next';
 import {initReactI18next} from 'react-i18next';
-import commonEn from './translations/en/common.json';
-import validationEn from './translations/en/validation.json';
+import * as commonEn from './translations/en/common.json';
+import * as validationEn from './translations/en/validation.json';
 
 void i18n.use(initReactI18next).init({
   lng: 'en',

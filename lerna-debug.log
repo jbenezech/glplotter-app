@@ -1,0 +1,27 @@
+0 silly argv {
+0 silly argv   _: [ 'run' ],
+0 silly argv   stream: true,
+0 silly argv   lernaVersion: '6.0.3',
+0 silly argv   '$0': '.yarn/cache/lerna-npm-6.0.3-87a6efd769-503b830d46.zip/node_modules/lerna/cli.js',
+0 silly argv   script: 'build'
+0 silly argv }
+1 notice cli v6.0.3
+2 verbose rootPath /home/jerome/Project/GLPlotter/app/glplotter-app
+3 error 
+ There was a critical error when configuring the task runner, please report this on https://github.com/lerna/lerna
+4 error Error: @lerna/run tried to access nx, but it isn't declared in its dependencies; this makes the require call ambiguous and unsound.
+4 error
+4 error Required package: nx (via "nx/src/utils/output")
+4 error Required by: @lerna/run@npm:6.0.3 (via /home/jerome/Project/GLPlotter/app/glplotter-app/.yarn/cache/@lerna-run-npm-6.0.3-c364e31279-72da1a862e.zip/node_modules/@lerna/run/)
+4 error
+4 error Require stack:
+4 error - /home/jerome/Project/GLPlotter/app/glplotter-app/.yarn/cache/@lerna-run-npm-6.0.3-c364e31279-72da1a862e.zip/node_modules/@lerna/run/index.js
+4 error - /home/jerome/Project/GLPlotter/app/glplotter-app/.yarn/cache/@lerna-run-npm-6.0.3-c364e31279-72da1a862e.zip/node_modules/@lerna/run/command.js
+4 error - /home/jerome/Project/GLPlotter/app/glplotter-app/.yarn/cache/lerna-npm-6.0.3-87a6efd769-503b830d46.zip/node_modules/lerna/index.js
+4 error - /home/jerome/Project/GLPlotter/app/glplotter-app/.yarn/cache/lerna-npm-6.0.3-87a6efd769-503b830d46.zip/node_modules/lerna/cli.js
+4 error     at Function.require$$0.Module._resolveFilename (/home/jerome/Project/GLPlotter/app/glplotter-app/.pnp.cjs:33029:13)
+4 error     at Function.require$$0.Module._load (/home/jerome/Project/GLPlotter/app/glplotter-app/.pnp.cjs:32879:42)
+4 error     at Module.require (node:internal/modules/cjs/loader:1028:19)
+4 error     at require (node:internal/modules/cjs/helpers:102:18)
+4 error     at RunCommand.configureNxOutput (/home/jerome/Project/GLPlotter/app/glplotter-app/.yarn/cache/@lerna-run-npm-6.0.3-c364e31279-72da1a862e.zip/node_modules/@lerna/run/index.js:350:24)
+4 error     at RunCommand.runScriptsUsingNx (/home/jerome/Project/GLPlotter/app/glplotter-app/.yarn/cache/@lerna-run-npm-6.0.3-c364e31279-72da1a862e.zip/node_modules/@lerna/run/index.js:201:10)

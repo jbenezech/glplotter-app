@@ -1,0 +1,22 @@
+{
+  "extends": "./tsconfig.paths.json",
+  "compilerOptions": {
+    "composite": true,
+    "rootDir": "src",
+    "outDir": "dist",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "declaration": true,
+    "sourceMap": true,
+    "declarationDir": "dist",
+  },
+  "include": [
+    "src",
+    "src/**/*",
+    "src/**/*.json"
+  ],
+  "exclude": [
+    "dist",
+    "node_modules"
+  ]
+}

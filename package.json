@@ -2,9 +2,10 @@
   "name": "glplotter-app",
   "version": "0.1.0",
   "private": true,
-  "homepage": "./react",
+  "workspaces": [
+    "packages/*"
+  ],
   "dependencies": {
-    "@craco/craco": "^6.4.5",
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
     "@mui/icons-material": "^5.10.9",
@@ -15,7 +16,7 @@
     "@testing-library/user-event": "^13.5.0",
     "bootstrap": "^5.2.2",
     "formik": "^2.2.9",
-    "glplotter": "github:jbenezech/glplotter",
+    "glplotter": "^0.2.0",
     "i18next": "^22.0.4",
     "notistack": "^2.0.8",
     "react": "^18.2.0",
@@ -24,36 +25,23 @@
     "react-i18next": "^12.0.0",
     "react-router-dom": "^6.4.3",
     "react-scripts": "5.0.1",
-    "web-vitals": "^2.1.4",
     "yup": "^0.32.11"
   },
   "scripts": {
-    "start": "craco start",
-    "build": "craco build",
-    "test": "craco test",
+    "setup": "yarn workspaces foreach run yarn install",
     "prebuild": "yarn run lint",
-    "format": "npx prettier --write . \"{**/*,*}.{js,ts,jsx,tsx,css,scss,sass}\"",
-    "lint": "npx eslint src/ --ext .js,.jsx,.ts,.tsx --ignore-pattern node_modules/ && npx stylelint \"**/*.scss\"",
-    "lint-format": "npm run format && npm run lint",
+    "build": "lerna run build --stream",
+    "lint": "lerna run lint --stream --parallel",
+    "format": "lerna run format --stream --parallel",
+    "lint-format": "yarn run format && yarn run lint",
     "prepare": "husky install",
-    "precommit": "yarn pretty-quick --staged && yarn dlx eslint src/ --ext .js,.jsx,.ts,.tsx --ignore-pattern node_modules/ --cache --fix && yarn dlx stylelint \"**/*.scss\" --fix"
+    "precommit": "lerna run precommit",
+    "web:start": "concurrently -n \"Common,Web\" -c \"cyan.bold,blue.bold\" \"yarn workspace @glplotter-app/common watch\" \"yarn workspace @glplotter-app/web start\" -k"
   },
   "eslintConfig": {
     "extends": [
       "react-app",
       "react-app/jest"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
     ]
   },
   "devDependencies": {
@@ -67,13 +55,16 @@
     "@typescript-eslint/eslint-plugin": "^5.43.0",
     "@typescript-eslint/parser": "^5.43.0",
     "@welldone-software/why-did-you-render": "^7.0.1",
-    "craco-alias": "^3.0.1",
+    "concurrently": "^7.6.0",
+    "cross-env": "^7.0.3",
     "eslint": "^8.26.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-react": "^7.31.10",
     "eslint-plugin-react-hooks": "latest",
     "husky": "^8.0.1",
+    "lerna": "^6.0.3",
+    "nx": "15.2.1",
     "postcss": "^8.4.19",
     "postcss-scss": "^4.0.5",
     "prettier": "^2.7.1",
