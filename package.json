@@ -13,7 +13,7 @@
     "lint-format": "yarn run format && yarn run lint",
     "prepare": "husky install",
     "precommit": "lerna run precommit --stream --parallel",
-    "web:start": "concurrently -n \"Common,Web\" -c \"cyan.bold,blue.bold\" \"yarn workspace @glplotter-app/common watch\" \"yarn workspace @glplotter-app/web start\" -k"
+    "web:start": "yarn workspace @glplotter-app/common build && concurrently -n \"Common,Web\" -c \"cyan.bold,blue.bold\" \"yarn workspace @glplotter-app/common watch\" \"yarn workspace @glplotter-app/web start\" -k"
   },
   "eslintConfig": {
     "extends": [

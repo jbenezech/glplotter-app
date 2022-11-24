@@ -2,10 +2,7 @@
   "extends": "../../tsconfig.build.json",
   "compilerOptions": {
     "noEmit": true,
-    "composite": true,
-    "paths": {
-      "@common": ["packages/common/*"]
-    }
+    "composite": true
   },
   "references": [
     { "path": "../common" }
