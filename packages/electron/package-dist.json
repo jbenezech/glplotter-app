@@ -1,0 +1,10 @@
+{
+  "name": "glplotter-electron",
+  "version": "0.1.0",
+  "private": true,
+  "author": {
+    "name": "Jerome",
+    "email": "jeromekampot@gmail.com"
+  },
+  "homepage": "https://github.com/jbenezech/glplotter-app"
+}

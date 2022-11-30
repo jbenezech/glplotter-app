@@ -2,6 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import reportWebVitals from './reportWebVitals';
 import {App} from '@glplotter-app/common';
+import {PlatformProvider} from '@glplotter-app/common';
+import {WebContext} from './platform/WebContext';
+import '@glplotter-app/common/dist/main.css';
 
 const anchor = document.getElementById('root');
 if (anchor === null) {
@@ -10,7 +13,9 @@ if (anchor === null) {
 const root = ReactDOM.createRoot(anchor);
 root.render(
   <React.StrictMode>
-    <App />
+    <PlatformProvider implementation={WebContext}>
+      <App />
+    </PlatformProvider>
   </React.StrictMode>
 );
 

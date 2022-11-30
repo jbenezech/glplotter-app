@@ -1,0 +1,28 @@
+{
+  "extends": "../../tsconfig.build.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "composite": true
+  },
+  "references": [
+    { "path": "../common" }
+  ],
+  "include": [
+    "src/",
+    "src/**/*",
+    "webpack.config.ts"
+  ],
+  "exclude": [
+    "public",
+    "build",
+    "node_modules",
+    "test"
+  ],
+  "ts-node": {
+    "esm": true,
+    "compilerOptions": {
+      "module": "CommonJS",
+      "moduleResolution": "NodeNext"
+    }
+  }
+}

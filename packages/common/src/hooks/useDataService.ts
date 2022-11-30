@@ -1,6 +1,9 @@
-import {DataService, DataServiceContext} from '@Services/DataService';
-import {useContext} from 'react';
+import {PlatformContext} from '@Context/PlatformContext';
+import {DataServiceInterface} from '@Services/DataServiceInterface';
+import {useContext, useMemo} from 'react';
 
-export const useDataService = (): DataService => {
-  return useContext<DataService>(DataServiceContext);
+export const useDataService = (): DataServiceInterface => {
+  const context = useContext(PlatformContext);
+  const service = useMemo(() => context.dataService(), [context]);
+  return service;
 };

@@ -35,9 +35,9 @@ export function GLPlotterComponent({
       stateObserver: (state: GLPlotterInfo) =>
         dispatch({type: 'gl/info', payload: {info: state}}),
     });
-    void dataService.listen(locationState?.sessionId, (data: DataFrame) =>
-      plotterService.plotter().bufferData(data)
-    );
+    void dataService.listen(locationState?.sessionId, (data: DataFrame) => {
+      plotterService.plotter().bufferData(data);
+    });
 
     onReady(true);
   }, [

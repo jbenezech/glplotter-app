@@ -10,23 +10,4 @@ module.exports = {
   eslint: {
     enable: false,
   },
-  plugins: [
-    {
-      plugin: CracoAlias,
-      options: {
-        source: 'tsconfig',
-        // baseUrl SHOULD be specified
-        // plugin does not take it from tsconfig
-        baseUrl: '../common/',
-        // tsConfigPath should point to the file where "baseUrl" and "paths" are specified
-        tsConfigPath: '../common/tsconfig.paths.json',
-      },
-    },
-    {
-      plugin: rewireBabelLoader,
-      options: {
-        includes: [resolveApp('src'), resolveApp('../common/src')],
-      },
-    },
-  ],
 };

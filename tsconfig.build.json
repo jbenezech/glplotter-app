@@ -25,7 +25,6 @@
     "build",
     "node_modules",
     "test",
-    ".eslintcache",
-    "packages/**/dist/**"
+    ".eslintcache"
   ]
 }

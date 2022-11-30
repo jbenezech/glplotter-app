@@ -1,7 +1,7 @@
 {
   "name": "@glplotter-app/web",
   "version": "0.1.0",
-  "homepage": "./react",
+  "homepage": ".",
   "dependencies": {
     "@craco/craco": "^6.4.5",
     "@glplotter-app/common": "*",

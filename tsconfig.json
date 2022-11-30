@@ -9,7 +9,10 @@
         "path": "packages/common"
     },
     {
-        "path": "packages/web"
+      "path": "packages/web"
+    },
+    {
+      "path": "packages/electron"
     }
   ]
 }

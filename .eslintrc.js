@@ -61,6 +61,7 @@ module.exports = {
           'ul',
           '_',
           'ns',
+          'to',
         ],
       },
     ],
