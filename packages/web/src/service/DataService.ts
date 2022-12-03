@@ -6,9 +6,27 @@ import {
   StartSessionMessageType,
   StopSessionMessageType,
   WorkerOutgoingMessage,
+  WorkerPortMessageType,
 } from './worker/Messages';
 
-const worker = new Worker(new URL('./worker/data-worker.ts', import.meta.url));
+const socketWorker = new SharedWorker(
+  new URL('./worker/socket-worker.ts', import.meta.url),
+  {name: 'fetcher'}
+);
+
+const processingWorker = new SharedWorker(
+  new URL('./worker/data-worker.ts', import.meta.url)
+);
+
+processingWorker.port.postMessage(
+  {
+    type: WorkerPortMessageType,
+    payload: {
+      port: socketWorker.port,
+    },
+  },
+  [socketWorker.port]
+);
 
 export class DataService implements DataServiceInterface {
   public listen(
@@ -18,9 +36,14 @@ export class DataService implements DataServiceInterface {
     //stop if we were already sending data
     this.stop();
 
-    worker.postMessage({type: StartSessionMessageType, payload: sessionId});
+    processingWorker.port.postMessage({
+      type: StartSessionMessageType,
+      payload: sessionId,
+    });
 
-    worker.onmessage = (event: MessageEvent<WorkerOutgoingMessage>): void => {
+    processingWorker.port.onmessage = (
+      event: MessageEvent<WorkerOutgoingMessage>
+    ): void => {
       switch (event.data.type) {
         case DataReceivedMessageType: {
           const payload = event.data.payload;
@@ -30,12 +53,13 @@ export class DataService implements DataServiceInterface {
           break;
         }
         default:
+          console.log(event.data);
       }
     };
   }
 
   public stop(): void {
-    worker.postMessage({type: StopSessionMessageType});
+    socketWorker.port.postMessage({type: StopSessionMessageType});
   }
 }
 

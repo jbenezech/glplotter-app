@@ -1,59 +1,98 @@
 import {DataFrame, Point} from 'glplotter';
 import {
   DataReceivedMessageType,
-  StartSessionMessageType,
-  StopSessionMessageType,
+  DATA_CHANNEL,
+  WorkCommunicationMessage,
   WorkerIncomingMessage,
+  WorkerOutgoingMessage,
+  WorkerPortMessageType,
 } from './Messages';
 
-const SAMPLING_RATE = 50;
-const CHANNELS = ['ch1', 'ch2'];
+interface SharedWorkerGlobalScope {
+  onconnect: (event: MessageEvent) => void;
+}
 
-let lastX = 0;
-let interval: NodeJS.Timer | null = null;
+const worker: SharedWorkerGlobalScope = self as SharedWorkerGlobalScope;
 
-const generateSignal = (): Point[] => {
-  const points: Point[] = [];
-  for (let index = lastX; index < SAMPLING_RATE + lastX; index++) {
-    points.push({
-      x: index,
-      y: Math.sin(index / ((SAMPLING_RATE * 10) / (Math.PI * 2))) * 4,
-    });
+let socketPort: MessagePort | null = null;
+const mainPorts: MessagePort[] = [];
+let portInCommand: MessagePort | null = null;
+
+worker.onconnect = (connectEvent): void => {
+  const port = connectEvent.ports[0];
+  if (portInCommand == null) {
+    portInCommand = port;
+    portInCommand.addEventListener(
+      'message',
+      (
+        messageEvent: MessageEvent<
+          WorkCommunicationMessage | WorkerIncomingMessage
+        >
+      ) => {
+        switch (messageEvent.data.type) {
+          case WorkerPortMessageType:
+            socketPort = messageEvent.data.payload.port;
+            break;
+          default:
+            socketPort?.postMessage(messageEvent.data);
+        }
+      }
+    );
   }
-
-  return points;
+  port.start();
+  mainPorts.push(port);
 };
 
-self.onmessage = (event: MessageEvent<WorkerIncomingMessage>): void => {
-  switch (event.data.type) {
-    case StartSessionMessageType:
-      if (interval !== null) {
-        clearInterval(interval);
-        lastX = 0;
-      }
-      interval = setInterval(() => {
-        const frames: DataFrame[] = [];
-        CHANNELS.forEach((channel) =>
-          frames.push({
-            channelId: channel,
-            points: generateSignal(),
-          })
-        );
-        lastX += SAMPLING_RATE;
+const dataChannel = new BroadcastChannel(DATA_CHANNEL);
+const portsBackFilled: MessagePort[] = [];
 
-        self.postMessage({
+//All contexts share the same data
+//So a context started later will not have its data
+//starting at zero
+//We backfill late comers here so that all contexts
+//have the same amount of data
+//We could eventually hold some data in RAM for a while
+//and backfill with real data instead of zeros
+const backfillLateFramesForPort = (
+  frames: DataFrame[],
+  port: MessagePort
+): DataFrame[] => {
+  if (portsBackFilled.includes(port)) {
+    return frames;
+  }
+
+  const firstFrame = frames[0];
+  const firstPoint = firstFrame.points[0];
+  const backfilledPoints: Point[] = [];
+  for (let index = 0; index < firstPoint.x; index++) {
+    backfilledPoints.push({
+      x: index,
+      y: 0,
+    });
+  }
+  const backfilledFrames = frames.map((frame) => ({
+    ...frame,
+    points: [...backfilledPoints, ...frame.points],
+  }));
+
+  portsBackFilled.push(port);
+  return backfilledFrames;
+};
+
+dataChannel.onmessage = (event: MessageEvent<WorkerOutgoingMessage>): void => {
+  switch (event.data.type) {
+    case DataReceivedMessageType:
+      //In real life, we'll do some processing here
+      //That's why we do it in a worker
+      mainPorts.forEach((port) => {
+        const frames = backfillLateFramesForPort(event.data.payload.data, port);
+        port.postMessage({
           type: DataReceivedMessageType,
           payload: {
             data: frames,
           },
         });
-      }, SAMPLING_RATE);
-      break;
-    case StopSessionMessageType:
-      if (interval !== null) {
-        clearInterval(interval);
-      }
-      lastX = 0;
+      });
       break;
     default:
   }

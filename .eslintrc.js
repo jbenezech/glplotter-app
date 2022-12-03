@@ -9,6 +9,7 @@ module.exports = {
   },
   env: {
     browser: true,
+    worker: true,
   },
   settings: {
     react: {

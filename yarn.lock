@@ -2020,7 +2020,6 @@ __metadata:
     "@babel/preset-typescript": ^7.18.6
     "@emotion/react": ^11.10.5
     "@emotion/styled": ^11.10.5
-    "@glplotter-app/liryc-data-processor": "*"
     "@mui/icons-material": ^5.10.9
     "@mui/material": ^5.10.12
     "@mui/styles": ^5.10.10
@@ -2081,7 +2080,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@glplotter-app/liryc-data-processor@*, @glplotter-app/liryc-data-processor@workspace:packages/liryc-data-processor":
+"@glplotter-app/liryc-data-processor@workspace:packages/liryc-data-processor":
   version: 0.0.0-use.local
   resolution: "@glplotter-app/liryc-data-processor@workspace:packages/liryc-data-processor"
   dependencies:
@@ -2104,6 +2103,7 @@ __metadata:
     "@types/react": ^18.0.25
     "@types/react-dom": ^18.0.9
     "@types/react-router-dom": ^5.3.3
+    "@types/sharedworker": ^0.0.86
     "@typescript-eslint/eslint-plugin": ^5.43.0
     "@typescript-eslint/parser": ^5.43.0
     craco-alias: ^3.0.1
@@ -4930,6 +4930,13 @@ __metadata:
     "@types/mime": "*"
     "@types/node": "*"
   checksum: b6ac93d471fb0f53ddcac1f9b67572a09cd62806f7db5855244b28f6f421139626f24799392566e97d1ffc61b12f9de7f30380c39fcae3c8a161fe161d44edf2
+  languageName: node
+  linkType: hard
+
+"@types/sharedworker@npm:^0.0.86":
+  version: 0.0.86
+  resolution: "@types/sharedworker@npm:0.0.86"
+  checksum: 92e12645c02ebb01dc56bccc4547cf374eb030f319fba4ead57840e3163fc5a4c4fd9bc0855d8dc490a207584c67c07ec5fdf3474b557e10b9fce4f3882f6609
   languageName: node
   linkType: hard
 
