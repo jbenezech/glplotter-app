@@ -20,7 +20,7 @@ export type WorkCommunicationMessage = WorkerPortMessage;
 
 export const StartSessionMessageType = 'session/start';
 export interface SessionStartPayload {
-  sessionId: string;
+  sessionId?: string;
 }
 export type StartSessionMessage = WorkerMessage<
   typeof StartSessionMessageType,

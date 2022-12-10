@@ -1,5 +1,3 @@
-//Shared worker that simulates a websocket server
-
 import {DataFrame, Point} from 'glplotter';
 import {
   DataReceivedMessageType,
@@ -7,7 +5,7 @@ import {
   StartSessionMessageType,
   StopSessionMessageType,
   WorkerIncomingMessage,
-} from './Messages';
+} from '../Messages';
 
 const SAMPLING_RATE = 50;
 const CHANNELS = ['ch1', 'ch2'];
@@ -28,13 +26,7 @@ const generateSignal = (): Point[] => {
   return points;
 };
 
-interface SharedWorkerGlobalScope {
-  onconnect: (event: MessageEvent) => void;
-}
-
-const worker: SharedWorkerGlobalScope = self as SharedWorkerGlobalScope;
-
-const handleMessage = (event: MessageEvent<WorkerIncomingMessage>): void => {
+self.onmessage = (event: MessageEvent<WorkerIncomingMessage>): void => {
   switch (event.data.type) {
     case StartSessionMessageType:
       if (interval !== null) {
@@ -67,15 +59,4 @@ const handleMessage = (event: MessageEvent<WorkerIncomingMessage>): void => {
       break;
     default:
   }
-};
-
-worker.onconnect = (connectEvent): void => {
-  const port = connectEvent.ports[0];
-  port.addEventListener(
-    'message',
-    (messageEvent: MessageEvent<WorkerIncomingMessage>) => {
-      handleMessage(messageEvent);
-    }
-  );
-  port.start();
 };

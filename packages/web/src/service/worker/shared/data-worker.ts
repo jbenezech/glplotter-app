@@ -6,7 +6,7 @@ import {
   WorkerIncomingMessage,
   WorkerOutgoingMessage,
   WorkerPortMessageType,
-} from './Messages';
+} from '../Messages';
 
 interface SharedWorkerGlobalScope {
   onconnect: (event: MessageEvent) => void;
