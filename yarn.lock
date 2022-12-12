@@ -2108,6 +2108,7 @@ __metadata:
     "@typescript-eslint/parser": ^5.43.0
     craco-alias: ^3.0.1
     craco-babel-loader: ^1.0.3
+    cross-env: ^7.0.3
     eslint: ^8.26.0
     eslint-config-prettier: ^8.5.0
     eslint-plugin-prettier: ^4.2.1

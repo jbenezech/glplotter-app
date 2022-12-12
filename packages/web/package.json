@@ -13,7 +13,7 @@
   },
   "scripts": {
     "start": "craco start",
-    "build": "craco build",
+    "build": "cross-env REACT_APP_BASE_URL=/glplotter/react craco build",
     "test": "craco test",
     "prebuild": "yarn run lint",
     "format": "npx prettier --write . \"{**/*,*}.{js,ts,jsx,tsx,css,scss,sass}\"",
@@ -42,6 +42,7 @@
     "@typescript-eslint/parser": "^5.43.0",
     "craco-alias": "^3.0.1",
     "craco-babel-loader": "^1.0.3",
+    "cross-env": "^7.0.3",
     "eslint": "^8.26.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.2.1",

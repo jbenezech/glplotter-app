@@ -4,6 +4,10 @@ import {
   WorkerIncomingMessage,
 } from './Messages';
 
+const hasSharedWorkerSupport = (): boolean => {
+  return typeof window.SharedWorker === 'function';
+};
+
 export interface ProcessingWorkerInterface {
   setOnMessage: (
     handler: (event: MessageEvent<WorkerOutgoingMessage>) => void
@@ -13,7 +17,7 @@ export interface ProcessingWorkerInterface {
 
 export const ProcessingWorker = (): ProcessingWorkerInterface => {
   let processingWorker: SharedWorker | Worker;
-  if (typeof window.SharedWorker === 'function') {
+  if (hasSharedWorkerSupport()) {
     const socketWorker = new SharedWorker(
       new URL('./shared/socket-worker.ts', import.meta.url)
     );
@@ -41,17 +45,21 @@ export const ProcessingWorker = (): ProcessingWorkerInterface => {
     setOnMessage: (
       handler: (event: MessageEvent<WorkerOutgoingMessage>) => void
     ): void => {
-      if (processingWorker instanceof SharedWorker) {
-        processingWorker.port.onmessage = handler;
+      if (hasSharedWorkerSupport()) {
+        const worker = processingWorker as SharedWorker;
+        worker.port.onmessage = handler;
       } else {
-        processingWorker.onmessage = handler;
+        const worker = processingWorker as Worker;
+        worker.onmessage = handler;
       }
     },
     postMessage: (message: WorkerIncomingMessage): void => {
-      if (processingWorker instanceof SharedWorker) {
-        processingWorker.port.postMessage(message);
+      if (hasSharedWorkerSupport()) {
+        const worker = processingWorker as SharedWorker;
+        worker.port.postMessage(message);
       } else {
-        processingWorker.postMessage(message);
+        const worker = processingWorker as Worker;
+        worker.postMessage(message);
       }
     },
   };

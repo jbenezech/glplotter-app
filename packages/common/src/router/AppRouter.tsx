@@ -5,8 +5,9 @@ import {Settings} from '@Pages/settings/Settings';
 import {Session} from '@Pages/session/Session';
 
 export default function AppRouter(): ReactElement {
+  const basename = process.env.REACT_APP_BASE_URL || '/';
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={basename}>
       <Routes>
         <Route path={APP_ROUTES.SETTINGS} element={<Settings />} />
         <Route path="*" element={<Session />} />
