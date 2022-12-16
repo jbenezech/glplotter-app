@@ -27,3 +27,23 @@ This application uses _yarn v3_ and yarn workspaces.
 1. Tests
 2. Tests
 3. Tests
+
+# Motivation
+
+This is a simle demo app that aims to demonstrate the use of some librairies an techniques
+
+## Libraries
+
+- glplotter
+- formik
+- yup
+- material-ui
+- i18n
+
+## Techniques
+
+- Setting up a yarn workspace monorepo
+- Sharing a React app between a Web and Electron app, with some platform-specific features
+- Using shared workers to share a socket connection
+- Using broadcast channels to communicate between workers
+- Direct communication between electron windows using message ports
