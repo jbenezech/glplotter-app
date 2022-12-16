@@ -19,7 +19,9 @@ export const validationChannels = (): yup.SchemaOf<{
             .string()
             .nullable()
             .required(() => i18n.t('validation.required', {ns: 'validation'})),
-          color: yup.string().required(() => i18n.t('validation.required')),
+          color: yup
+            .string()
+            .required(() => i18n.t('validation.required', {ns: 'validation'})),
         })
       )
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment

@@ -11,18 +11,8 @@ export function FullScreenDialog({
   children,
   onClose,
 }: FullScreenDialogProps): ReactElement {
-  const handleClose = (
-    event: Record<string, unknown>,
-    reason: string
-  ): void => {
-    if (reason === 'backdropClick') {
-      return;
-    }
-    onClose();
-  };
-
   return (
-    <Dialog fullScreen={true} open={true} onClose={handleClose}>
+    <Dialog fullScreen={true} open={true} onClose={onClose}>
       <div
         className={'container-fluid g-0 d-flex flex-column min-vh-100 z-100'}
       >
@@ -30,9 +20,7 @@ export function FullScreenDialog({
           color="secondary"
           component="label"
           className="ms-auto px-5 pt-2"
-          onClick={(): void => {
-            handleClose({}, 'closeIconClick');
-          }}
+          onClick={onClose}
         >
           <Close />
         </IconButton>

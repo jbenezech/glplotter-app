@@ -79,23 +79,43 @@ export const ColorField = ({
           styles={pickerStyle}
         />
       )}
-      <div className={'d-flex w-100 flex-wrap justify-content-center'}>
+      <div
+        className={'d-flex w-100 flex-wrap justify-content-center'}
+        data-testid="colorfield"
+        data-color={color}
+      >
         {field.value && (
           <div key={field.value} className={`${classes.outter} me-3`}>
-            <div className={`${classes.inner}`} onClick={handleDeleteColor} />
+            <div
+              className={`${classes.inner}`}
+              onClick={handleDeleteColor}
+              data-testid="colorfield-delete"
+            />
             <div
               className={'w-100 h-100'}
               style={{backgroundColor: field.value}}
+              data-testid="colorfield-bg"
             />
-            <Text variant={'caption'} className={'w-100 text-center'}>
+            <Text
+              variant={'caption'}
+              className={'w-100 text-center'}
+              data-testid="colorfield-text"
+            >
               {field.value}
             </Text>
           </div>
         )}
-        <Palette onClick={(): void => setShowPicker(true)} />
+        <Palette
+          onClick={(): void => setShowPicker(true)}
+          data-testid="colorfield-palette"
+        />
       </div>
       {meta.touched && meta.error ? (
-        <FormHelperText className={'text-center'} error={true}>
+        <FormHelperText
+          className={'text-center'}
+          error={true}
+          data-testid="colorfield-error"
+        >
           {meta.error}
         </FormHelperText>
       ) : null}

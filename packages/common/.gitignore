@@ -2,3 +2,5 @@
 /dist
 tsconfig.tsbuildinfo
 .eslintcache
+/**/__snapshots__/
+/coverage
