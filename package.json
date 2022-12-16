@@ -9,7 +9,7 @@
     "prebuild": "yarn run lint",
     "build": "lerna run build --stream",
     "lint": "lerna run lint --stream --parallel",
-    "format": "lerna run format --stream --parallel",
+    "format": "npx prettier --write . \"{**/*,*}.{js,ts,jsx,tsx,css,scss,sass}\"",
     "lint-format": "yarn run format && yarn run lint",
     "prepare": "husky install",
     "precommit": "yarn workspace @glplotter-app/common precommit && yarn workspace @glplotter-app/web precommit && yarn workspace glplotter-electron precommit",

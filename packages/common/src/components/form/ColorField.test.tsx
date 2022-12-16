@@ -1,4 +1,4 @@
-import {fireEvent, render, screen, waitFor} from '@testing-library/react';
+import {render, screen, waitFor} from '@testing-library/react';
 import {
   FieldHelperProps,
   FieldInputProps,
@@ -9,7 +9,6 @@ import {ColorField} from './ColorField';
 import {LightTheme} from '../../themes';
 import {ThemeProvider} from '@mui/material/styles';
 import userEvent from '@testing-library/user-event';
-import {act} from 'react-dom/test-utils';
 
 const fieldMock: FieldInputProps<string | undefined> = {
   name: 'color',

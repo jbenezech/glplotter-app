@@ -11,7 +11,7 @@ describe('FullScreenDialog', () => {
   });
   it('renders children correctly', () => {
     render(
-      <FullScreenDialog onClose={(): void => {}}>
+      <FullScreenDialog onClose={(): void => undefined}>
         <div data-testid="test">Test</div>
       </FullScreenDialog>
     );
