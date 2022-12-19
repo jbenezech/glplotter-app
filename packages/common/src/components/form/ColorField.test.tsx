@@ -9,6 +9,7 @@ import {ColorField} from './ColorField';
 import {LightTheme} from '../../themes';
 import {ThemeProvider} from '@mui/material/styles';
 import userEvent from '@testing-library/user-event';
+import '@testing-library/jest-dom';
 
 const fieldMock: FieldInputProps<string | undefined> = {
   name: 'color',
@@ -141,5 +142,21 @@ describe('ColorField', () => {
     await waitFor(() => {
       expect(screen.getByTestId('colorfield-error')).toBeDefined();
     });
+  });
+
+  it('it closes picker on cancel', () => {
+    render(
+      <ThemeProvider theme={LightTheme}>
+        <ColorField name="color" />
+      </ThemeProvider>
+    );
+
+    userEvent.click(screen.getByTestId('colorfield-palette'));
+
+    const cancelButton = screen.getByText('Cancel');
+
+    userEvent.click(cancelButton);
+
+    expect(cancelButton).not.toBeInTheDocument();
   });
 });

@@ -43,13 +43,12 @@ export function AppMenu(): ReactElement {
       ) {
         return;
       }
-
       setOpen(open);
     };
 
   return (
     <div className={classes.drawerContainer}>
-      <IconButton onClick={toggleDrawer(true)}>
+      <IconButton onClick={toggleDrawer(true)} data-testid="appmenu-toggle">
         <MenuIcon />
       </IconButton>
       <Drawer
@@ -72,6 +71,8 @@ export function AppMenu(): ReactElement {
                 to={APP_ROUTES.ROOT}
                 state={{sessionId: sessionId}}
                 onClick={(): void => setSessionId(generateSessionId())}
+                data-testid="appmenu-session"
+                data-session={sessionId}
               >
                 <ListItemButton>
                   <ListItemIcon>
