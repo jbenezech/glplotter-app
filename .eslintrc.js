@@ -17,7 +17,7 @@ module.exports = {
       version: '18.0',
     },
   },
-  plugins: ['@typescript-eslint', 'react', 'react-hooks', 'prettier'],
+  plugins: ['@typescript-eslint', 'react', 'react-hooks', 'prettier', 'jest'],
   extends: [
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
@@ -26,6 +26,7 @@ module.exports = {
     'plugin:react-hooks/recommended',
     'prettier',
     'plugin:react/jsx-runtime',
+    'plugin:jest/recommended',
   ],
   rules: {
     'no-unsafe-optional-chaining': ['error'],

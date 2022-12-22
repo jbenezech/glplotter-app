@@ -37,6 +37,7 @@ export function Footer({onSettings}: FooterProps): ReactElement {
           color="secondary"
           component="label"
           onClick={(): void => onSettings()}
+          data-testid="footer-settings"
         >
           <Visibility />
         </IconButton>

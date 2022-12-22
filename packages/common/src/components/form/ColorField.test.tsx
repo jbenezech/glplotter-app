@@ -130,7 +130,7 @@ describe('ColorField', () => {
     });
   });
 
-  it('it shows error when set', async () => {
+  it('shows error when set', async () => {
     metaMock.touched = true;
     metaMock.error = 'error';
     render(
@@ -144,7 +144,7 @@ describe('ColorField', () => {
     });
   });
 
-  it('it closes picker on cancel', () => {
+  it('closes picker on cancel', () => {
     render(
       <ThemeProvider theme={LightTheme}>
         <ColorField name="color" />

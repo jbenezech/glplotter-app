@@ -1,7 +1,7 @@
 import {ApplicationDispatchContext} from '@Context/DispatchContext';
 import {ApplicationStateContext, Signal, Tab} from '@Context/StateContext';
 import {Form, Formik, FormikErrors, FormikProps, FormikValues} from 'formik';
-import {ReactElement, useContext} from 'react';
+import {ReactElement, useContext, useState} from 'react';
 import {validationTab} from './validation';
 import * as yup from 'yup';
 import {useTranslation} from 'react-i18next';
@@ -27,7 +27,9 @@ export function TabSettings({
   const {tabs, signals} = useContext(ApplicationStateContext);
   const {dispatch} = useContext(ApplicationDispatchContext);
   const {t} = useTranslation();
-  const tabIndex = tabs.findIndex((tab) => tab.id === currentTab.id);
+  const [tabState, setTabState] = useState<Tab>(currentTab);
+
+  const tabIndex = tabs.findIndex((tab) => tab.id === tabState.id);
 
   const initialValues = {
     signals: signals
@@ -38,6 +40,10 @@ export function TabSettings({
 
   const onSubmit = (values: TabFormikValues): void => {
     const tabValue = values.tabs[tabIndex];
+    setTabState({
+      ...tabState,
+      id: tabValue.id,
+    });
 
     dispatch({
       type: 'tab/save',
@@ -59,6 +65,7 @@ export function TabSettings({
         ],
       },
     });
+
     onComplete();
   };
 
@@ -113,7 +120,11 @@ export function TabSettings({
             <div className={'mt-4'}>
               {tabForm.values.signals.map((signal, index) => {
                 return (
-                  <div key={signal.id} className={'d-flex'}>
+                  <div
+                    key={signal.id}
+                    className={'d-flex'}
+                    data-testid={`tabsettings-${signal.id}`}
+                  >
                     <div className={'w-75'}>{signal.channelId}</div>
                     <ColorField name={`signals.${index}.color`} />
                     <Checkbox
@@ -121,6 +132,7 @@ export function TabSettings({
                       onChange={(event): void =>
                         handleCheckboxChange(event, tabForm, signal, index)
                       }
+                      data-testid={`tabsettings-checkbox-${signal.id}`}
                     />
                   </div>
                 );
