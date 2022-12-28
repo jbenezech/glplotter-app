@@ -53,6 +53,7 @@ export function Session(): ReactElement {
         className="vw-100 vh-100 d-flex flex-column justify-content-around overflow-hidden"
         tabIndex={0}
         onKeyDown={handleKeyPress}
+        data-testid="session-window"
       >
         <Header onSettings={(): void => setIsChannelSettingsOpen(true)} />
         <MainWindow />

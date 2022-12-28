@@ -46,6 +46,7 @@ export function Timeline({
       onMouseUp={handleMouseUp}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
+      data-testid="timeline"
     >
       {children}
     </div>

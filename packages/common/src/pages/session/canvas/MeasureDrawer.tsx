@@ -98,6 +98,7 @@ export function MeasureDrawer({
       positionY,
       plotterService.plotter()
     );
+
     setPendingMeasure(measure);
   };
 
@@ -150,6 +151,7 @@ export function MeasureDrawer({
       positionY,
       plotterService.plotter()
     );
+
     if (measure === undefined) {
       return;
     }
@@ -232,6 +234,7 @@ export function MeasureDrawer({
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       onDoubleClick={handleDoubleClick}
+      data-testid="measuredrawer"
     />
   );
 }

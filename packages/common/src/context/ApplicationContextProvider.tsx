@@ -2,10 +2,10 @@ import {useTheme} from '@mui/material';
 import {ReactElement, useMemo, useReducer} from 'react';
 import {
   ApplicationAction,
-  ApplicationDispatchContext,
   applicationReducer,
   ApplicationReducerType,
-} from './DispatchContext';
+} from './ApplicationReducer';
+import {ApplicationDispatchContext} from './DispatchContext';
 import {
   ApplicationStateContext,
   ApplicationStateType,

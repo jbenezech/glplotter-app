@@ -7,7 +7,7 @@ import {Form, Formik, FormikProps, FormikValues} from 'formik';
 import {ReactElement, useContext} from 'react';
 import {useTranslation} from 'react-i18next';
 import * as yup from 'yup';
-import {SingleChannelSettings} from './SingleChannelSetting';
+import {SingleChannelSettings} from './SingleChannelSettings';
 import {validationChannels} from './validation';
 
 export interface ChannelsFormikValues extends FormikValues {

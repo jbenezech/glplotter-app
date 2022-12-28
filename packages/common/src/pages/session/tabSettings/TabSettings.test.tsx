@@ -1,4 +1,4 @@
-import {screen, waitFor} from '@testing-library/react';
+import {act, screen, waitFor} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import {renderWithTestProviders} from 'src/test/utils/ProviderWrapper';
 import '@testing-library/jest-dom';
@@ -85,7 +85,8 @@ describe('TabSettings', () => {
 
     userEvent.clear(input);
     userEvent.type(input, 'Other tab');
-    userEvent.click(submit);
+
+    await act(() => userEvent.click(submit));
 
     await waitFor(() => expect(onComplete).toHaveBeenCalled());
   });
@@ -103,7 +104,8 @@ describe('TabSettings', () => {
 
     userEvent.clear(input);
     userEvent.type(input, 'Tab2');
-    userEvent.click(submit);
+
+    await act(() => userEvent.click(submit));
 
     await waitFor(() =>
       expect(container.querySelector('.Mui-error')).toBeDefined()
@@ -129,7 +131,7 @@ describe('TabSettings', () => {
 
     expect(checkbox).toBeChecked();
 
-    userEvent.click(submit);
+    await act(() => userEvent.click(submit));
 
     await waitFor(() => expect(onComplete).toHaveBeenCalled());
   });
@@ -167,7 +169,7 @@ describe('TabSettings', () => {
       expect(screen.getByText('#b92b2b')).toBeInTheDocument();
     });
 
-    userEvent.click(submit);
+    await act(() => userEvent.click(submit));
 
     await waitFor(() => expect(onComplete).toHaveBeenCalled());
   });

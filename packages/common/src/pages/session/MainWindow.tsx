@@ -6,7 +6,7 @@ import {createStyles, makeStyles} from '@mui/styles';
 import {findSignalAtPosition, SIGNAL_PIXEL_HEIGHT} from '@Utils/signalUtils';
 import {ReactElement, useCallback, useContext, useState} from 'react';
 import {GLPlotterContainer} from './canvas/GLPlotterContainer';
-import {SignalsContainer} from './channel/SignalsContainer';
+import {SignalsContainer} from './signal/SignalsContainer';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -66,6 +66,7 @@ export function MainWindow(): ReactElement {
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       onWheel={handleMouseWheel}
+      data-testid="mainwindow"
     >
       <SignalsContainer />
       <GLPlotterContainer />

@@ -1,4 +1,4 @@
-import {ReducerAction} from '@Context/DispatchContext';
+import {ReducerAction} from '@Context/ApplicationReducer';
 import {Channel} from '@Context/StateContext';
 
 export const ChannelsSaveActionType = 'channels/save';

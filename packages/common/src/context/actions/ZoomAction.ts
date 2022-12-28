@@ -1,4 +1,4 @@
-import {ReducerAction} from '@Context/DispatchContext';
+import {ReducerAction} from '@Context/ApplicationReducer';
 
 export const ZoomIncreaseActionType = 'zoom/increase';
 export interface ZoomIncreasePayload {

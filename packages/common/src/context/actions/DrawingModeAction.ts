@@ -1,4 +1,4 @@
-import {ReducerAction} from '@Context/DispatchContext';
+import {ReducerAction} from '@Context/ApplicationReducer';
 
 export const DrawingModeToggleActionType = 'drawingMode/toggle';
 export type DrawingModeTogglePayload = Record<string, never>;

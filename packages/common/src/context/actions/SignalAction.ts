@@ -1,4 +1,4 @@
-import {ReducerAction} from '@Context/DispatchContext';
+import {ReducerAction} from '@Context/ApplicationReducer';
 
 export const SignalMoveActionType = 'signal/move';
 export interface SignalMovePayload {

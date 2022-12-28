@@ -66,7 +66,7 @@ export const fitSignalsInContainer = (
     ...otherSignals,
     ...overflowingSignals.map((signal) => ({
       ...signal,
-      yPosition: containerRect.height - SIGNAL_PIXEL_HEIGHT,
+      yPosition: Math.max(0, containerRect.height - SIGNAL_PIXEL_HEIGHT),
     })),
   ];
 };
@@ -80,6 +80,7 @@ export const findSignalAtPosition = (
   if (activeTab === undefined) {
     return;
   }
+
   return signals.find(
     (signal) =>
       !!signal.visible &&

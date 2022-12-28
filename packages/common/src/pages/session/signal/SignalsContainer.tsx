@@ -102,6 +102,7 @@ export function SignalsContainer(): ReactElement {
       onMouseUp={handleMouseUp}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
+      data-testid="signalscontainer"
     >
       {signals
         .filter((signal) => signal.containerId === activeTab?.id)

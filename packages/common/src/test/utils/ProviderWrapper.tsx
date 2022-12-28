@@ -4,6 +4,8 @@ import {LightTheme} from 'src/themes';
 import {ThemeProvider} from '@mui/material';
 import {ApplicationContextProvider} from '@Context/ApplicationContextProvider';
 import {BrowserRouter} from 'react-router-dom';
+import PlatformProvider from '@Context/PlatformProvider';
+import {PlatformContextMock} from './PlatformContextMock';
 
 jest.mock('react-i18next', () => ({
   // this mock makes sure any components using the translate HoC receive the t function as a prop
@@ -32,10 +34,12 @@ jest.mock('@I18n', () => ({
 
 export function renderWithTestProviders(component: ReactElement): RenderResult {
   return render(
-    <ThemeProvider theme={LightTheme}>
-      <ApplicationContextProvider>
-        <BrowserRouter>{component}</BrowserRouter>
-      </ApplicationContextProvider>
-    </ThemeProvider>
+    <PlatformProvider implementation={PlatformContextMock}>
+      <ThemeProvider theme={LightTheme}>
+        <ApplicationContextProvider>
+          <BrowserRouter>{component}</BrowserRouter>
+        </ApplicationContextProvider>
+      </ThemeProvider>
+    </PlatformProvider>
   );
 }

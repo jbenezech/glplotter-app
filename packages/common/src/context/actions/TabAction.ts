@@ -1,4 +1,4 @@
-import {ReducerAction} from '@Context/DispatchContext';
+import {ReducerAction} from '@Context/ApplicationReducer';
 import {Signal, Tab} from '@Context/StateContext';
 
 export const TabSaveActionType = 'tab/save';
