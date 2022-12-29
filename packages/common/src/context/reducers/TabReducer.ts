@@ -47,8 +47,16 @@ export const tabReducer = (
     case TabSaveActionType: {
       return {
         ...state,
-        tabs: action.payload.tabs,
-        signals: action.payload.signals,
+        tabs: [
+          ...state.tabs.filter((tab) => tab.id !== action.payload.previousId),
+          action.payload.tab,
+        ],
+        signals: [
+          ...state.signals.filter(
+            (signal) => signal.containerId !== action.payload.previousId
+          ),
+          ...action.payload.tabSignals,
+        ],
       };
     }
     case TabCreateActionType: {

@@ -45,18 +45,16 @@ export function TabSettings({
       id: tabValue.id,
     });
 
+    //payload should be tabSignals
     dispatch({
       type: 'tab/save',
       payload: {
-        tabs: [
-          ...tabs.filter((tab) => tab.id !== currentTab.id),
-          {
-            ...currentTab,
-            id: tabValue.id,
-          },
-        ],
-        signals: [
-          ...signals.filter((signal) => signal.containerId !== currentTab.id),
+        previousId: currentTab.id,
+        tab: {
+          ...currentTab,
+          id: tabValue.id,
+        },
+        tabSignals: [
           ...values.signals.map((signal) => ({
             ...signal,
             containerId: tabValue.id,

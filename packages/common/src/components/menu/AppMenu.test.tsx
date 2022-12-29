@@ -18,17 +18,17 @@ jest.mock('react-i18next', () => ({
   }),
 }));
 
-const mockUid: {value: `${string}-${string}-${string}-${string}-${string}`} = {
-  value: 'abc-abc-abc-abc-abc',
-};
-
-Object.defineProperty(window, 'crypto', {
-  value: {
-    randomUUID: () => mockUid.value,
-  },
-});
-
 describe('AppMenu', () => {
+  const mockUid: {value: `${string}-${string}-${string}-${string}-${string}`} =
+    {
+      value: 'axc-abc-abc-abc-abc',
+    };
+
+  beforeEach(() => {
+    window.crypto.randomUUID =
+      (): `${string}-${string}-${string}-${string}-${string}` => mockUid.value;
+  });
+
   it('renders without crashing', () => {
     const {container} = render(
       <ThemeProvider theme={LightTheme}>

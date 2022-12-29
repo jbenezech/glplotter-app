@@ -7,12 +7,6 @@ import {ReactElement} from 'react';
 import {renderWithTestProviders} from 'src/test/utils/ProviderWrapper';
 import {Session} from './Session';
 
-Object.defineProperty(window, 'crypto', {
-  value: {
-    randomUUID: () => 'abc-abc-abc-abc-abc',
-  },
-});
-
 const reducerSpy = jest.fn();
 
 jest.mock('./channelSettings/ChannelSettings', () => ({

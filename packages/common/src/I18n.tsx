@@ -18,7 +18,3 @@ void i18n.use(initReactI18next).init({
 });
 
 export default i18n;
-
-export function resolveAssetFolder(): string {
-  return `/assets/${i18n.language}`;
-}

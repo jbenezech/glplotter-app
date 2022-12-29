@@ -3,8 +3,9 @@ import {Signal, Tab} from '@Context/StateContext';
 
 export const TabSaveActionType = 'tab/save';
 export interface TabSavePayload {
-  tabs: Tab[];
-  signals: Signal[];
+  previousId: string;
+  tab: Tab;
+  tabSignals: Signal[];
 }
 export type TabSaveAction = ReducerAction<
   typeof TabSaveActionType,

@@ -4,9 +4,12 @@ import {compilerOptions} from './tsconfig.paths.json';
 export default {
   roots: ['<rootDir>'],
   modulePaths: [compilerOptions.baseUrl], // <-- This will be set to 'baseUrl' value
-  moduleNameMapper: pathsToModuleNameMapper(
-    compilerOptions.paths /*, { prefix: '<rootDir>/' } */
-  ),
+  moduleNameMapper: {
+    '\\.(css|less|scss)$': 'identity-obj-proxy',
+    ...pathsToModuleNameMapper(
+      compilerOptions.paths /*, { prefix: '<rootDir>/' } */
+    ),
+  },
 
   // All imported modules in your tests should be mocked automatically
   // automock: false,
@@ -63,13 +66,15 @@ export default {
   // forceCoverageMatch: [],
 
   // A path to a module which exports an async function that is triggered once before all test suites
-  // globalSetup: undefined,
+  // globalSetup: "",
 
   // A path to a module which exports an async function that is triggered once after all test suites
   // globalTeardown: undefined,
 
   // A set of global variables that need to be available in all test environments
-  // globals: {},
+  globals: {
+    window: {},
+  },
 
   // The maximum amount of workers used to run your tests. Can be specified as % or a number. E.g. maxWorkers: 10% will use 10% of your CPU amount + 1 as the maximum worker number. maxWorkers: 2 will use a maximum of 2 workers.
   // maxWorkers: "50%",
@@ -139,7 +144,7 @@ export default {
   // setupFiles: [],
 
   // A list of paths to modules that run some code to configure or set up the testing framework before each test
-  // setupFilesAfterEnv: [],
+  setupFilesAfterEnv: ['./src/test/utils/jestGlobalSetup.ts'],
 
   // The number of seconds after which a test is considered as slow and reported as such in the results.
   // slowTestThreshold: 5,
