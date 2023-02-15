@@ -11,7 +11,7 @@
   },
   "scripts": {
     "start": "vite",
-    "build": "cross-env REACT_APP_BASE_URL=/glplotter/react vite build",
+    "build": "vite build",
     "test": "vitest",
     "prebuild": "yarn run lint",
     "format": "npx prettier --write . \"{**/*,*}.{js,ts,jsx,tsx,css,scss,sass}\"",
@@ -40,7 +40,6 @@
     "@typescript-eslint/eslint-plugin": "^5.43.0",
     "@typescript-eslint/parser": "^5.43.0",
     "@vitejs/plugin-react": "^3.1.0",
-    "cross-env": "^7.0.3",
     "eslint": "^8.26.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.2.1",

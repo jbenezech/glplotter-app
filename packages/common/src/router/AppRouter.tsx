@@ -6,9 +6,11 @@ import {Session} from '@Pages/session/Session';
 
 export default function AppRouter(): ReactElement {
   const basename = (import.meta.env.BASE_URL || '/').replace(
+    //remove starting ./ if any like when bunded as electron
     /^\.\/(.*)$/,
     '$1'
   );
+  console.log('BASE', import.meta.env.BASE_URL, basename);
   return (
     <BrowserRouter basename={basename}>
       <Routes>
