@@ -1,21 +1,21 @@
 import {screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import {renderWithTestProviders} from 'src/test/utils/ProviderWrapper';
-import '@testing-library/jest-dom';
 import {Header} from './Header';
 import {ReactElement} from 'react';
+import {vi, describe, it, expect} from 'vitest';
 
-const onSettings = jest.fn();
+const onSettings = vi.fn();
 
-jest.mock('../displayRate/DisplayRate', () => ({
+vi.mock('../displayRate/DisplayRate', () => ({
   DisplayRate: (): ReactElement => <div data-testid="displayRate" />,
 }));
 
-jest.mock('../drawingMode/DrawingMode', () => ({
+vi.mock('../drawingMode/DrawingMode', () => ({
   DrawingMode: (): ReactElement => <div data-testid="drawingMode" />,
 }));
 
-jest.mock('./Info', () => ({
+vi.mock('./Info', () => ({
   Info: (): ReactElement => <div data-testid="info" />,
 }));
 
@@ -37,10 +37,10 @@ describe('Header', () => {
     expect(screen.getByTestId('info')).toBeInTheDocument();
   });
 
-  it('calls onSettings when clicking icon', () => {
+  it('calls onSettings when clicking icon', async () => {
     renderWithTestProviders(<Header onSettings={onSettings} />);
 
-    userEvent.click(screen.getByTestId('header-settings'));
+    await userEvent.click(screen.getByTestId('header-settings'));
 
     expect(onSettings).toHaveBeenCalled();
   });

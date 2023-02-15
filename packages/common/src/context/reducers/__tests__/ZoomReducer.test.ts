@@ -5,6 +5,7 @@ import {
 import {InitialApplicationState} from '@Context/StateContext';
 import {LightTheme} from 'src/themes';
 import {zoomReducer} from '../ZoomReducer';
+import {describe, it, expect} from 'vitest';
 
 const stateTemplate = InitialApplicationState(LightTheme);
 const state = {

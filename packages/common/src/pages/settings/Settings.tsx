@@ -52,7 +52,7 @@ export function Settings(): ReactElement {
             aria-label="basic tabs example"
           >
             <Tab
-              label={<Text>{t('settings.tabs.data-source')}</Text>}
+              label={<Text>{t('settings.tabs.dataSource')}</Text>}
               {...a11yProps(0)}
             />
           </Tabs>

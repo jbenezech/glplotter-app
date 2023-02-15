@@ -5,6 +5,7 @@ import {
 import {InitialApplicationState} from '@Context/StateContext';
 import {LightTheme} from 'src/themes';
 import {displayRateReducer} from '../DisplayRateReducer';
+import {describe, it, expect} from 'vitest';
 
 const state = InitialApplicationState(LightTheme);
 

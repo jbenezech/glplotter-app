@@ -1,40 +1,35 @@
-import {act, screen, waitFor} from '@testing-library/react';
+import {screen, waitFor} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import {renderWithTestProviders} from 'src/test/utils/ProviderWrapper';
-import '@testing-library/jest-dom';
 import {TabSettings} from './TabSettings';
 import assert from 'assert';
-import {LightTheme} from 'src/themes';
 import {registerValidators} from '@Validation/Validators';
+import {vi, describe, it, expect} from 'vitest';
+import {ApplicationStateType} from '@Context/StateContext';
+import {DEFAULT_STATE} from '@Context/config';
 
 registerValidators();
 
-const originalContext = jest.requireActual<
-  typeof import('@Context/StateContext')
->('@Context/StateContext');
-
-const originalState = originalContext.InitialApplicationState(LightTheme);
-
-const mockState = {
-  ...originalState,
+const mockState: ApplicationStateType = {
+  ...DEFAULT_STATE,
   tabs: [
-    ...originalState.tabs,
+    ...DEFAULT_STATE.tabs,
     {
-      ...originalState.tabs[0],
+      ...DEFAULT_STATE.tabs[0],
       id: 'Tab2',
     },
   ],
   channels: [
-    ...originalState.channels,
+    ...DEFAULT_STATE.channels,
     {
-      ...originalState.channels[0],
+      ...DEFAULT_STATE.channels[0],
       id: 'ch2',
     },
   ],
   signals: [
-    ...originalState.signals,
+    ...DEFAULT_STATE.signals,
     {
-      ...originalState.signals[0],
+      ...DEFAULT_STATE.signals[0],
       id: 'c1-ch2',
       channelId: 'ch2',
       visible: false,
@@ -42,15 +37,18 @@ const mockState = {
   ],
 };
 
-jest.mock('@Context/StateContext', () => ({
-  ...jest.requireActual<typeof import('@Context/StateContext')>(
-    '@Context/StateContext'
-  ),
-  InitialApplicationState: (): Record<string, unknown> => mockState,
-}));
+vi.mock('@Context/StateContext', async () => {
+  const originalContext = await vi.importActual<
+    typeof import('@Context/StateContext')
+  >('@Context/StateContext');
+  return {
+    ...originalContext,
+    InitialApplicationState: (): ApplicationStateType => mockState,
+  };
+});
 
 const currentTab = mockState.tabs[0];
-const onComplete = jest.fn();
+const onComplete = vi.fn();
 
 describe('TabSettings', () => {
   it('renders without crashing', () => {
@@ -83,10 +81,10 @@ describe('TabSettings', () => {
     assert(input !== null);
     assert(submit !== null);
 
-    userEvent.clear(input);
-    userEvent.type(input, 'Other tab');
+    await userEvent.clear(input);
+    await userEvent.type(input, 'Other tab');
 
-    await act(() => userEvent.click(submit));
+    await userEvent.click(submit);
 
     await waitFor(() => expect(onComplete).toHaveBeenCalled());
   });
@@ -102,10 +100,10 @@ describe('TabSettings', () => {
     assert(input !== null);
     assert(submit !== null);
 
-    userEvent.clear(input);
-    userEvent.type(input, 'Tab2');
+    await userEvent.clear(input);
+    await userEvent.type(input, 'Tab2');
 
-    await act(() => userEvent.click(submit));
+    await userEvent.click(submit);
 
     await waitFor(() =>
       expect(container.querySelector('.Mui-error')).toBeDefined()
@@ -127,11 +125,11 @@ describe('TabSettings', () => {
 
     expect(checkbox).not.toBeChecked();
 
-    userEvent.click(checkbox);
+    await userEvent.click(checkbox);
 
     expect(checkbox).toBeChecked();
 
-    await act(() => userEvent.click(submit));
+    await userEvent.click(submit);
 
     await waitFor(() => expect(onComplete).toHaveBeenCalled());
   });
@@ -153,23 +151,23 @@ describe('TabSettings', () => {
     assert(colorField !== null);
     assert(submit !== null);
 
-    userEvent.click(colorFieldButton);
+    await userEvent.click(colorFieldButton);
 
-    userEvent.clear(screen.getByLabelText('#'));
+    await userEvent.clear(screen.getByLabelText('#'));
 
-    userEvent.type(screen.getByLabelText('#'), 'B92B2B');
+    await userEvent.type(screen.getByLabelText('#'), 'B92B2B');
 
     await waitFor(() => {
       expect(colorField.getAttribute('data-color')).toEqual('#b92b2b');
     });
 
-    userEvent.click(screen.getByText('OK'));
+    await userEvent.click(screen.getByText('OK'));
 
     await waitFor(() => {
       expect(screen.getByText('#b92b2b')).toBeInTheDocument();
     });
 
-    await act(() => userEvent.click(submit));
+    await userEvent.click(submit);
 
     await waitFor(() => expect(onComplete).toHaveBeenCalled());
   });

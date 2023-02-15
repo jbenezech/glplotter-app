@@ -1,23 +1,28 @@
 import {PlotterService} from '@Services/PlotterService';
-import '@testing-library/jest-dom';
 import {waitFor} from '@testing-library/react';
 import {Location} from 'react-router-dom';
 import {listenSpy} from 'src/test/utils/DataServiceMock';
 import {renderWithTestProviders} from 'src/test/utils/ProviderWrapper';
 import {GLPlotterComponent} from './GLPlotterComponent';
+import {vi, describe, it, expect} from 'vitest';
 
 const location: Partial<Location> = {};
 
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual<typeof import('react-router-dom')>('react-router-dom'),
-  useLocation: (): Partial<Location> => location,
-}));
+vi.mock('react-router-dom', async () => {
+  const originalModule = await vi.importActual<
+    typeof import('react-router-dom')
+  >('react-router-dom');
+  return {
+    ...originalModule,
+    useLocation: (): Partial<Location> => location,
+  };
+});
 
-jest.mock('@Services/PlotterService');
-const plotterService = jest.mocked(new PlotterService());
+vi.mock('@Services/PlotterService');
+const plotterService = vi.mocked(new PlotterService());
 
 const glContainer: HTMLElement = document.createElement('div');
-const onReady = jest.fn();
+const onReady = vi.fn();
 
 describe('GLPlotterComponent', () => {
   it('renders without crashing', () => {

@@ -1,27 +1,25 @@
 import {PlotterService} from '@Services/PlotterService';
-import '@testing-library/jest-dom';
 import {waitFor} from '@testing-library/react';
 import {renderWithTestProviders} from 'src/test/utils/ProviderWrapper';
-import {LightTheme} from 'src/themes';
 import {GLPlotterStateComponent} from './GLPlotterStateComponent';
+import {DEFAULT_STATE} from '@Context/config';
+import {ApplicationStateType} from '@Context/StateContext';
+import {vi, describe, it, expect} from 'vitest';
 
-jest.mock('@Services/PlotterService');
-const plotterService = jest.mocked(new PlotterService());
+vi.mock('@Services/PlotterService');
+const plotterService = vi.mocked(new PlotterService());
 
-const originalContext = jest.requireActual<
-  typeof import('@Context/StateContext')
->('@Context/StateContext');
+const mockState: ApplicationStateType = DEFAULT_STATE;
 
-const originalState = originalContext.InitialApplicationState(LightTheme);
-
-const mockState = {...originalState};
-
-jest.mock('@Context/StateContext', () => ({
-  ...jest.requireActual<typeof import('@Context/StateContext')>(
-    '@Context/StateContext'
-  ),
-  InitialApplicationState: (): Record<string, unknown> => mockState,
-}));
+vi.mock('@Context/StateContext', async () => {
+  const originalContext = await vi.importActual<
+    typeof import('@Context/StateContext')
+  >('@Context/StateContext');
+  return {
+    ...originalContext,
+    InitialApplicationState: (): ApplicationStateType => mockState,
+  };
+});
 
 describe('GLPlotterStateComponent', () => {
   it('renders without crashing', () => {
@@ -31,15 +29,15 @@ describe('GLPlotterStateComponent', () => {
 
   it('sets the state of the plotter', async () => {
     const {signals} = mockState;
-    const signalsWithColor = signals.map((signal) => ({
+    const signalsWithColorFromChannel = signals.map((signal) => ({
       ...signal,
-      color: '#DED628',
+      color: '#fff',
     }));
 
     renderWithTestProviders(<GLPlotterStateComponent />);
     await waitFor(() => {
       expect(plotterService.plotter().replaceSignals).toHaveBeenCalledWith(
-        signalsWithColor
+        signalsWithColorFromChannel
       );
       expect(plotterService.plotter().displayRate).toHaveBeenCalledWith(
         mockState.displayRate

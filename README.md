@@ -22,12 +22,6 @@ This application uses _yarn v3_ and yarn workspaces.
 
 `yarn electron:start`
 
-# _TODO_
-
-1. Tests
-2. Tests
-3. Tests
-
 # Motivation
 
 This is a simle demo app that aims to demonstrate the use of some librairies an techniques

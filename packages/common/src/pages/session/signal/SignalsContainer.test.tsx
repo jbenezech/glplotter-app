@@ -1,11 +1,11 @@
 import {renderWithTestProviders} from 'src/test/utils/ProviderWrapper';
-import '@testing-library/jest-dom';
 import {ReactElement} from 'react';
 import {fireEvent, screen} from '@testing-library/react';
 import {SignalsContainer} from './SignalsContainer';
 import {Signal} from '@Context/StateContext';
+import {vi, describe, it, expect} from 'vitest';
 
-jest.mock('./SignalComponent', () => ({
+vi.mock('./SignalComponent', () => ({
   SignalComponent: ({signal}: {signal: Signal}): ReactElement => {
     return (
       <div
@@ -21,7 +21,7 @@ jest.mock('./SignalComponent', () => ({
 
 const assignContainerBounds = (): void => {
   const signalsContainer = screen.getByTestId('signalscontainer');
-  signalsContainer.getBoundingClientRect = jest.fn(() => ({
+  signalsContainer.getBoundingClientRect = vi.fn(() => ({
     x: 0,
     y: 0,
     width: 1000,
@@ -30,7 +30,7 @@ const assignContainerBounds = (): void => {
     right: 0,
     bottom: 0,
     left: 0,
-    toJSON: jest.fn(),
+    toJSON: vi.fn(),
   }));
   fireEvent(window, new Event('resize'));
 };

@@ -2,8 +2,7 @@ import {Theme} from '@mui/material/styles';
 import {SIGNAL_PIXEL_HEIGHT} from '@Utils/signalUtils';
 import {GLPlotterInfo} from 'glplotter';
 import {createContext} from 'react';
-
-export const INITIAL_DISPLAY_RATE = 50;
+import {DEFAULT_STATE} from './config';
 
 export interface Signal {
   id: string;
@@ -41,42 +40,20 @@ export interface ApplicationStateType {
 }
 
 export const InitialApplicationState = (theme: Theme): ApplicationStateType => {
+  const state = DEFAULT_STATE;
+  const channels = state.channels.map((channel) => ({
+    ...channel,
+    color: theme.colors.signal,
+  }));
+  const signals = state.signals.map((signal) => ({
+    ...signal,
+    chartHeight: SIGNAL_PIXEL_HEIGHT,
+  }));
+
   return {
-    displayRate: INITIAL_DISPLAY_RATE,
-    isRecording: true,
-    signalsContainerRect: null,
-    tabs: [
-      {
-        id: 'c1',
-        position: 1,
-        visible: true,
-      },
-    ],
-    channels: [
-      {
-        id: 'ch1',
-        dataSource: 'ch1',
-        color: theme.colors.signal,
-      },
-    ],
-    signals: [
-      {
-        id: 'c1-ch1',
-        containerId: 'c1',
-        channelId: 'ch1',
-        color: null,
-        visible: true,
-        amplitude: 8,
-        pitch: 1,
-        chartHeight: SIGNAL_PIXEL_HEIGHT,
-        yPosition: 70,
-        zoomRatio: 1,
-      },
-    ],
-    glInfo: {
-      pointsPerWindow: 0,
-      gpuOverflow: false,
-    },
+    ...DEFAULT_STATE,
+    channels,
+    signals,
   };
 };
 

@@ -3,17 +3,17 @@ import {
   ApplicationStateType,
   InitialApplicationState,
 } from '@Context/StateContext';
-import '@testing-library/jest-dom';
 import {screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import assert from 'assert';
 import {renderWithTestProviders} from 'src/test/utils/ProviderWrapper';
 import {LightTheme} from 'src/themes';
 import {SignalComponent} from './SignalComponent';
+import {vi, describe, it, expect} from 'vitest';
 
-const reducerSpy = jest.fn();
+const reducerSpy = vi.fn();
 
-jest.mock('../../../context/ApplicationReducer', () => ({
+vi.mock('../../../context/ApplicationReducer', () => ({
   applicationReducer: (
     state: ApplicationStateType,
     action: ApplicationAction
@@ -41,7 +41,7 @@ describe('SignalComponent', () => {
     expect(screen.getByText('x1')).toBeInTheDocument();
   });
 
-  it('increases and decreases zoom on click', () => {
+  it('increases and decreases zoom on click', async () => {
     renderWithTestProviders(<SignalComponent signal={signal} />);
 
     const increaseButton = screen.getByTestId('ArrowDropUpIcon').parentElement;
@@ -51,7 +51,7 @@ describe('SignalComponent', () => {
     assert(increaseButton !== null);
     assert(decreaseButton !== null);
 
-    userEvent.click(increaseButton);
+    await userEvent.click(increaseButton);
 
     expect(reducerSpy).toHaveBeenCalledWith({
       type: 'zoom/increase',
@@ -60,7 +60,7 @@ describe('SignalComponent', () => {
       },
     });
 
-    userEvent.click(decreaseButton);
+    await userEvent.click(decreaseButton);
 
     expect(reducerSpy).toHaveBeenCalledWith({
       type: 'zoom/decrease',

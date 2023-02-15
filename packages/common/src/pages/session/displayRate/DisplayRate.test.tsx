@@ -2,6 +2,7 @@ import userEvent from '@testing-library/user-event';
 import assert from 'assert';
 import {renderWithTestProviders} from 'src/test/utils/ProviderWrapper';
 import {DisplayRate} from './DisplayRate';
+import {describe, it, expect} from 'vitest';
 
 describe('DisplayRate', () => {
   it('renders without crashing', () => {
@@ -15,24 +16,24 @@ describe('DisplayRate', () => {
     expect(container.querySelector('p')?.innerHTML).toContain('50');
   });
 
-  it('increases display rate when clicking on plus', () => {
+  it('increases display rate when clicking on plus', async () => {
     const {container} = renderWithTestProviders(<DisplayRate />);
 
     const button = container.querySelector('label:first-child');
     assert(button !== null);
 
-    userEvent.click(button);
+    await userEvent.click(button);
 
     expect(container.querySelector('p')?.innerHTML).toContain('100');
   });
 
-  it('decreases display rate when clicking on minus', () => {
+  it('decreases display rate when clicking on minus', async () => {
     const {container} = renderWithTestProviders(<DisplayRate />);
 
     const button = container.querySelector('label:nth-child(2)');
     assert(button !== null);
 
-    userEvent.click(button);
+    await userEvent.click(button);
 
     expect(container.querySelector('p')?.innerHTML).toContain('25');
   });

@@ -1,11 +1,11 @@
-import '@testing-library/jest-dom';
 import {screen, waitFor} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import {ReactElement, ReactNode} from 'react';
 import {renderWithTestProviders} from 'src/test/utils/ProviderWrapper';
 import {GLPlotterContainer} from './GLPlotterContainer';
+import {vi, describe, it, expect} from 'vitest';
 
-jest.mock('./GLPlotterComponent', () => ({
+vi.mock('./GLPlotterComponent', () => ({
   GLPlotterComponent: ({
     onReady,
   }: {
@@ -17,19 +17,19 @@ jest.mock('./GLPlotterComponent', () => ({
   },
 }));
 
-jest.mock('./GLPlotterStateComponent', () => ({
+vi.mock('./GLPlotterStateComponent', () => ({
   GLPlotterStateComponent: (): ReactElement => (
     <div data-testid="plotterState" />
   ),
 }));
 
-jest.mock('./Timeline', () => ({
+vi.mock('./Timeline', () => ({
   Timeline: ({children}: {children: ReactNode}): ReactElement => (
     <div data-testid="timeline">{children}</div>
   ),
 }));
 
-jest.mock('./MeasureDrawer', () => ({
+vi.mock('./MeasureDrawer', () => ({
   MeasureDrawer: (): ReactElement => <div data-testid="measures" />,
 }));
 
@@ -46,7 +46,7 @@ describe('GLPlotterContainer', () => {
       expect(screen.getByTestId('plotterComponent')).toBeInTheDocument();
     });
 
-    userEvent.click(screen.getByTestId('plotterComponent'));
+    await userEvent.click(screen.getByTestId('plotterComponent'));
 
     await waitFor(() => {
       expect(screen.getByTestId('plotterState')).toBeInTheDocument();

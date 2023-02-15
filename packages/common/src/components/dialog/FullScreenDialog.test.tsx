@@ -1,6 +1,7 @@
 import {FullScreenDialog} from './FullScreenDialog';
 import {render, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import {vi, describe, it, expect} from 'vitest';
 
 describe('FullScreenDialog', () => {
   it('renders without crashing', () => {
@@ -17,10 +18,10 @@ describe('FullScreenDialog', () => {
     );
     expect(screen.getByTestId('test').innerHTML).toEqual('Test');
   });
-  it('calls onClose when closing', () => {
-    const onClose = jest.fn();
+  it('calls onClose when closing', async () => {
+    const onClose = vi.fn();
     render(<FullScreenDialog onClose={onClose}>Test</FullScreenDialog>);
-    userEvent.click(screen.getByRole('button'));
+    await userEvent.click(screen.getByRole('button'));
     expect(onClose).toHaveBeenCalled();
   });
 });

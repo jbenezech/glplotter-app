@@ -1,9 +1,19 @@
 import {app, BrowserWindow, ipcMain, MessageChannelMain} from 'electron';
-import * as path from 'path';
-process.env.NODE_OPTIONS = undefined;
+import {join} from 'node:path';
+import {release} from 'node:os';
 
-const isDevelopment = process.env.NODE_ENV === 'development';
-const developmentPort = process.env.ELECTRON_WEBPACK_WDS_PORT || 8080;
+process.env.DIST_ELECTRON = join(__dirname, '../');
+process.env.DIST = join(process.env.DIST_ELECTRON, '../dist');
+process.env.PUBLIC = process.env.VITE_DEV_SERVER_URL
+  ? join(process.env.DIST_ELECTRON, '../public')
+  : process.env.DIST;
+
+// Disable GPU Acceleration for Windows 7
+if (release().startsWith('6.1')) app.disableHardwareAcceleration();
+
+// Set application name for Windows 10+ notifications
+if (process.platform === 'win32') app.setAppUserModelId(app.getName());
+
 const isMacOS = process.platform === 'darwin';
 
 // global reference to mainWindow (necessary to prevent window from being garbage collected)
@@ -20,8 +30,13 @@ async function createWorkerWindow(): Promise<void> {
     },
   });
 
-  const indexPath = path.resolve(__dirname, 'worker/index.html');
-  await window.loadFile(indexPath);
+  if (process.env.VITE_DEV_SERVER_URL) {
+    const url = join(process.env.VITE_DEV_SERVER_URL, 'src/worker/index.html');
+    await window.loadURL(url);
+  } else {
+    const indexHtml = join(process.env.DIST, 'worker/index.html');
+    await window.loadFile(indexHtml);
+  }
 
   window.on('closed', () => {
     workerWindow = null;
@@ -33,7 +48,7 @@ async function createWorkerWindow(): Promise<void> {
 async function createMainWindow(): Promise<void> {
   const window = new BrowserWindow({
     show: false,
-    icon: path.join(__dirname, 'logo.png'),
+    icon: join(process.env.PUBLIC, 'favicon.ico'),
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false,
@@ -44,12 +59,14 @@ async function createMainWindow(): Promise<void> {
   window.maximize();
   window.show();
 
-  if (isDevelopment) {
-    const url = `http://localhost:${developmentPort}`;
+  if (process.env.VITE_DEV_SERVER_URL) {
+    const url = process.env.VITE_DEV_SERVER_URL;
     await window.loadURL(url);
+    // Open devTool if the app is not packaged
+    window.webContents.openDevTools();
   } else {
-    const indexPath = path.resolve(__dirname, 'renderer/index.html');
-    await window.loadFile(indexPath);
+    const indexHtml = join(process.env.DIST, 'index.html');
+    await window.loadFile(indexHtml);
   }
 
   window.on('closed', () => {
@@ -87,3 +104,7 @@ app.on('ready', () => {
   void createMainWindow();
   bridgeRenderers();
 });
+
+app.commandLine.appendSwitch('ignore-gpu-blacklist');
+app.commandLine.appendSwitch('disable-gpu');
+app.commandLine.appendSwitch('disable-gpu-compositing');

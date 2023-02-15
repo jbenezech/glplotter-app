@@ -34,7 +34,7 @@ export function SingleChannelSettings({
     <div className="d-flex w-100 align-items-start">
       <TextField
         className={'w-25'}
-        label={t('channel-settings.form.id')}
+        label={t('channelSettings.form.id')}
         helperText={touched.id && errors.id}
         error={touched.id && Boolean(errors.id)}
         onChange={formikProps.handleChange}
@@ -60,7 +60,7 @@ export function SingleChannelSettings({
             helperText={touched.dataSource && errors.dataSource}
             error={touched.dataSource && Boolean(errors.dataSource)}
             required={true}
-            label={t('channel-settings.form.data-source')}
+            label={t('channelSettings.form.dataSource')}
             name={`channels.${formIndex}.dataSource`}
             value={values.dataSource}
           />

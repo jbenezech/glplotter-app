@@ -2,6 +2,7 @@ import {DrawingModeToggleActionType} from '@Context/actions/DrawingModeAction';
 import {InitialApplicationState} from '@Context/StateContext';
 import {LightTheme} from 'src/themes';
 import {drawingModeReducer} from '../DrawingModeReducer';
+import {describe, it, expect} from 'vitest';
 
 const state = InitialApplicationState(LightTheme);
 

@@ -1,10 +1,10 @@
 import {useDataService} from '@Hooks/useDataService';
 import {DataFrame, GLPlotterInfo} from 'glplotter';
 import {ReactElement, useCallback, useContext, useEffect} from 'react';
-import {INITIAL_DISPLAY_RATE} from '@Context/StateContext';
 import {usePlotterService} from '@Hooks/usePlotterService';
 import {ApplicationDispatchContext} from '@Context/DispatchContext';
 import {useLocation} from 'react-router-dom';
+import {INITIAL_DISPLAY_RATE} from '@Context/config';
 
 interface LocationState {
   sessionId?: string;

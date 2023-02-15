@@ -8,4 +8,5 @@ module.exports = {
       jsx: true,
     },
   },
+  ignorePatterns: ['scripts/*.*js'],
 };

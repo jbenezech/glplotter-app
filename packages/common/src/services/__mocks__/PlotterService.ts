@@ -1,23 +1,24 @@
 import {GLPlotter} from 'glplotter';
 import {createContext} from 'react';
+import {vi} from 'vitest';
 
 export const plotterMock = {
-  bufferData: jest.fn(),
-  addSignal: jest.fn(),
-  removeSignal: jest.fn(),
-  replaceSignals: jest.fn(),
-  stop: jest.fn(),
-  destroy: jest.fn(),
-  displayRate: jest.fn(),
-  zoom: jest.fn(),
-  positionSignal: jest.fn(),
-  switchMode: jest.fn(),
-  move: jest.fn(),
+  bufferData: vi.fn(),
+  addSignal: vi.fn(),
+  removeSignal: vi.fn(),
+  replaceSignals: vi.fn(),
+  stop: vi.fn(),
+  destroy: vi.fn(),
+  displayRate: vi.fn(),
+  zoom: vi.fn(),
+  positionSignal: vi.fn(),
+  switchMode: vi.fn(),
+  move: vi.fn(),
   timestamp: (position: number): number => position,
   pixelToTimestamp: (position: number): number => position,
-  addMeasure: jest.fn(),
-  removeMeasure: jest.fn(),
-  replaceMeasures: jest.fn(),
+  addMeasure: vi.fn(),
+  removeMeasure: vi.fn(),
+  replaceMeasures: vi.fn(),
 };
 
 export class PlotterService {

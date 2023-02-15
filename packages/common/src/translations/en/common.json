@@ -1,33 +1,33 @@
 {
   "save": "Save",
-  "display-rate-value": "{{value}} mm/s",
+  "displayRateValue": "{{value}} mm/s",
   "menu": {
     "restart": "Restart session",
     "settings": "Settings"
   },
-  "channel-settings": {
+  "channelSettings": {
     "title": "Channels",
     "form": {
       "id": "Identifier",
-      "data-source": "Data source"
+      "dataSource": "Data source"
     },
     "error": {
-      "unique-channel-id": "Another channel already uses this identifier."
+      "uniqueChannelId": "Another channel already uses this identifier."
     }
   },
-  "tab-settings": {
+  "tabSettings": {
     "title": "Tab",
-    "signals-title": "Signals",
+    "signalsTitle": "Signals",
     "form": {
       "id": "Identifier"
     },
     "error": {
-      "unique-tab-id": "Another tab already uses this identifier."
+      "uniqueTabId": "Another tab already uses this identifier."
     }
   },
   "settings": {
     "tabs": {
-      "data-source": "Data Source"
+      "dataSource": "Data Source"
     }
   }
 }

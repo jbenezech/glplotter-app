@@ -27,6 +27,6 @@ export const validationChannels = (): yup.SchemaOf<{
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-member-access
-      .unique(i18n.t('channel-settings.error.unique-channel-id'), 'id'),
+      .unique(i18n.t('channelSettings.error.uniqueChannelId'), 'id'),
   });
 };

@@ -100,11 +100,11 @@ export function TabSettings({
 
         return (
           <Form className={'w-75 m-auto'}>
-            <Text variant="h1">{t('tab-settings.title')}</Text>
+            <Text variant="h1">{t('tabSettings.title')}</Text>
             <div className="d-flex my-5 w-100">
               <TextField
                 className={'flex-grow-1'}
-                label={t('tab-settings.form.id')}
+                label={t('tabSettings.form.id')}
                 helperText={tabTouched.id && tabErrors.id}
                 error={tabTouched.id && Boolean(tabErrors.id)}
                 onChange={tabForm.handleChange}
@@ -114,7 +114,7 @@ export function TabSettings({
                 required={true}
               />
             </div>
-            <Text variant="h2">{t('tab-settings.signals-title')}</Text>
+            <Text variant="h2">{t('tabSettings.signalsTitle')}</Text>
             <div className={'mt-4'}>
               {tabForm.values.signals.map((signal, index) => {
                 return (

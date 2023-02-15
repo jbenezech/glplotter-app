@@ -3,7 +3,8 @@ module.exports = {
   parserOptions: {
     tsconfigRootDir: __dirname,
     project: ['./tsconfig.json'],
-    ecmaVersion: 2018,
+    ecmaVersion: 2020,
+    types: ['vite/client'],
     ecmaFeatures: {
       jsx: true,
     },

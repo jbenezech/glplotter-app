@@ -1,9 +1,10 @@
 import {GLPlotter} from 'glplotter';
 import {PlotterService} from './PlotterService';
+import {vi, describe, it, expect} from 'vitest';
 
-const destroySpy = jest.fn();
+const destroySpy = vi.fn();
 
-jest.mock('glplotter', () => ({
+vi.mock('glplotter', () => ({
   glplotter: (): Partial<GLPlotter> => {
     return {
       destroy: destroySpy,

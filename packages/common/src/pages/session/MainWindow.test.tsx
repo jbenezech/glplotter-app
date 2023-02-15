@@ -3,18 +3,18 @@ import {
   ApplicationStateType,
   InitialApplicationState,
 } from '@Context/StateContext';
-import '@testing-library/jest-dom';
 import {fireEvent, screen} from '@testing-library/react';
 import {ReactElement} from 'react';
 import {renderWithTestProviders} from 'src/test/utils/ProviderWrapper';
 import {LightTheme} from 'src/themes';
 import {MainWindow} from './MainWindow';
+import {vi, describe, it, expect} from 'vitest';
 
 const state = InitialApplicationState(LightTheme);
 
-const reducerSpy = jest.fn();
+const reducerSpy = vi.fn();
 
-jest.mock('../../context/ApplicationReducer', () => ({
+vi.mock('../../context/ApplicationReducer', () => ({
   applicationReducer: (
     state: ApplicationStateType,
     action: ApplicationAction
@@ -24,19 +24,23 @@ jest.mock('../../context/ApplicationReducer', () => ({
   },
 }));
 
-jest.mock('./signal/SignalsContainer', () => ({
+vi.mock('./signal/SignalsContainer', () => ({
   SignalsContainer: (): ReactElement => {
     return <div data-testid="signalscontainer" />;
   },
 }));
 
-jest.mock('./canvas/GLPlotterContainer', () => ({
+vi.mock('./canvas/GLPlotterContainer', () => ({
   GLPlotterContainer: (): ReactElement => (
     <div data-testid="plottercontainer" />
   ),
 }));
 
 describe('MainWindow', () => {
+  afterEach(() => {
+    vi.clearAllMocks();
+  });
+
   it('renders without crashing', () => {
     const {container} = renderWithTestProviders(<MainWindow />);
     expect(container).toMatchSnapshot();

@@ -1,12 +1,12 @@
 import {renderWithTestProviders} from 'src/test/utils/ProviderWrapper';
-import '@testing-library/jest-dom';
 import {fireEvent, screen} from '@testing-library/react';
 import {Timeline} from './Timeline';
 import {PlotterService} from '@Services/PlotterService';
+import {vi, describe, it, expect} from 'vitest';
 
-jest.mock('@Services/PlotterService');
+vi.mock('@Services/PlotterService');
 
-const plotterService = jest.mocked(new PlotterService());
+const plotterService = vi.mocked(new PlotterService());
 
 const containerRect = {
   x: 0,
@@ -17,12 +17,16 @@ const containerRect = {
   right: 0,
   bottom: 0,
   left: 0,
-  toJSON: jest.fn(),
+  toJSON: vi.fn(),
 };
 
 const children = <div data-testid="children" />;
 
 describe('Timeline', () => {
+  afterEach(() => {
+    vi.clearAllMocks();
+  });
+
   it('renders without crashing', () => {
     const {container} = renderWithTestProviders(
       <Timeline containerRect={containerRect}>{children}</Timeline>

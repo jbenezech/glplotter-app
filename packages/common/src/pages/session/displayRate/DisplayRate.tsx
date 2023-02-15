@@ -46,7 +46,7 @@ export function DisplayRate(): ReactElement {
         <RemoveCircle fontSize="large" />
       </IconButton>
       <Text className={classes.text}>
-        {t('display-rate-value', {value: displayRate})}
+        {t('displayRateValue', {value: displayRate})}
       </Text>
     </div>
   );

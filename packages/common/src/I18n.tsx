@@ -1,19 +1,15 @@
 import i18n from 'i18next';
 import {initReactI18next} from 'react-i18next';
-import * as commonEn from './translations/en/common.json';
-import * as validationEn from './translations/en/validation.json';
+import {translationEn} from './translations/en';
 
 void i18n.use(initReactI18next).init({
   lng: 'en',
-  debug: process.env.REACT_APP_DEBUG_MODE === 'true',
+  debug: import.meta.env.DEV,
   resources: {
-    en: {
-      translation: commonEn,
-      validation: validationEn,
-    },
+    en: translationEn,
   },
   interpolation: {
-    escapeValue: false, // react is already safe from xss
+    escapeValue: false,
   },
 });
 

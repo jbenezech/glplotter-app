@@ -9,12 +9,12 @@ import {AppMenu} from './AppMenu';
 import {BrowserRouter} from 'react-router-dom';
 import {ThemeProvider} from '@mui/material';
 import {LightTheme} from 'src/themes';
-import '@testing-library/jest-dom';
+import {vi, describe, it, expect} from 'vitest';
 
-jest.mock('react-i18next', () => ({
+vi.mock('react-i18next', () => ({
   // this mock makes sure any components using the translate HoC receive the t function as a prop
   useTranslation: (): unknown => ({
-    t: jest.fn(),
+    t: vi.fn(),
   }),
 }));
 
@@ -39,7 +39,7 @@ describe('AppMenu', () => {
     );
     expect(container).toMatchSnapshot();
   });
-  it('opens drawer when click', () => {
+  it('opens drawer when click', async () => {
     render(
       <ThemeProvider theme={LightTheme}>
         <BrowserRouter>
@@ -47,7 +47,7 @@ describe('AppMenu', () => {
         </BrowserRouter>
       </ThemeProvider>
     );
-    userEvent.click(screen.getByTestId('appmenu-toggle'));
+    await userEvent.click(screen.getByTestId('appmenu-toggle'));
     expect(screen.getByTestId('appmenu-session')).toBeDefined();
   });
   it('does close the drawer on keyboard event', async () => {
@@ -58,22 +58,22 @@ describe('AppMenu', () => {
         </BrowserRouter>
       </ThemeProvider>
     );
-    userEvent.click(screen.getByTestId('appmenu-toggle'));
-    userEvent.tab();
+    await userEvent.click(screen.getByTestId('appmenu-toggle'));
+    await userEvent.tab();
     await waitFor(() => {
       expect(screen.getByTestId('appmenu-session')).toBeInTheDocument();
     });
 
-    userEvent.keyboard('{Shift}');
+    await userEvent.keyboard('{Shift}');
     await waitFor(() => {
       expect(screen.getByTestId('appmenu-session')).toBeInTheDocument();
     });
 
     const element = screen.getByTestId('appmenu-session');
-    userEvent.keyboard('{c}');
+    await userEvent.keyboard('{c}');
     await waitForElementToBeRemoved(element);
   });
-  it('generates new session when navigating on link', () => {
+  it('generates new session when navigating on link', async () => {
     render(
       <ThemeProvider theme={LightTheme}>
         <BrowserRouter>
@@ -81,14 +81,14 @@ describe('AppMenu', () => {
         </BrowserRouter>
       </ThemeProvider>
     );
-    userEvent.click(screen.getByTestId('appmenu-toggle'));
+    await userEvent.click(screen.getByTestId('appmenu-toggle'));
 
     const sessionId = screen
       .getByTestId('appmenu-session')
       .getAttribute('data-session');
     mockUid.value = 'abc-abc-abc-abc-abd';
 
-    userEvent.click(screen.getByTestId('appmenu-session'));
+    await userEvent.click(screen.getByTestId('appmenu-session'));
     expect(
       screen.getByTestId('appmenu-session').getAttribute('data-session')
     ).not.toEqual(sessionId);

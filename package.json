@@ -12,9 +12,9 @@
     "format": "npx prettier --write . \"{**/*,*}.{js,ts,jsx,tsx,css,scss,sass}\"",
     "lint-format": "yarn run format && yarn run lint",
     "prepare": "husky install",
-    "precommit": "yarn workspace @glplotter-app/common precommit && yarn workspace @glplotter-app/web precommit && yarn workspace glplotter-electron precommit",
-    "web:start": "yarn workspace @glplotter-app/common build && concurrently -n \"Common,Web\" -c \"cyan.bold,blue.bold\" \"yarn workspace @glplotter-app/common watch\" \"yarn workspace @glplotter-app/web start\" -k",
-    "electron:start": "yarn workspace @glplotter-app/common build && concurrently -n \"Common,Electron\" -c \"cyan.bold,blue.bold\" \"yarn workspace @glplotter-app/common watch\" \"yarn workspace glplotter-electron start\" -k"
+    "precommit": "yarn pretty-quick --staged && lerna run lint-fix --stream --parallel",
+    "web:start": "yarn workspace @glplotter-app/web start",
+    "electron:start": "yarn workspace glplotter-electron start"
   },
   "eslintConfig": {
     "extends": [
@@ -32,8 +32,6 @@
     "@types/reactcss": "^1.2.6",
     "@typescript-eslint/eslint-plugin": "^5.43.0",
     "@typescript-eslint/parser": "^5.43.0",
-    "concurrently": "^7.6.0",
-    "cross-env": "^7.0.3",
     "eslint": "^8.26.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.2.1",
@@ -42,11 +40,8 @@
     "husky": "^8.0.1",
     "lerna": "^6.0.3",
     "nx": "15.2.1",
-    "postcss": "^8.4.19",
-    "postcss-scss": "^4.0.5",
     "prettier": "^2.7.1",
     "pretty-quick": "^3.1.3",
-    "resolve-url-loader": "^5.0.0",
     "sass": "^1.56.0",
     "stylelint": "^14.14.1",
     "stylelint-config-prettier": "^9.0.3",

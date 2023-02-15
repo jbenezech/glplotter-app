@@ -5,9 +5,10 @@
   "appId": "com.github.glplotter-electron",
   "afterSign": "./scripts/notarize.js",
   "directories": {
-    "app": "build",
-    "buildResources": "assets"
+    "buildResources": "assets",
+    "output": "release/${version}"
   },
+  "files": ["dist-electron", "dist"],
   "linux": {
     "category": "Productivity",
     "target": [

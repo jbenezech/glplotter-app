@@ -15,12 +15,12 @@ import {registerValidators} from '@Validation/Validators';
 registerValidators();
 
 function App(): ReactElement {
-  if (process.env.REACT_APP_DEBUG_MODE === 'true') {
+  if (import.meta.env.DEV) {
     console.info('App is running in debug mode.');
   }
   // Allow the use of https://github.com/simbathesailor/use-what-changed
   // to debug when in debug mode
-  setUseWhatChange(process.env.REACT_APP_DEBUG_MODE === 'true');
+  setUseWhatChange(import.meta.env.DEV);
 
   return (
     <I18nextProvider i18n={i18next}>

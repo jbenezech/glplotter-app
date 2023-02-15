@@ -1,7 +1,8 @@
 import {DataFrame} from 'glplotter';
+import {vi} from 'vitest';
 
-export const listenSpy = jest.fn();
-export const stopSpy = jest.fn();
+export const listenSpy = vi.fn();
+export const stopSpy = vi.fn();
 
 export class DataServiceMock {
   public async listen(

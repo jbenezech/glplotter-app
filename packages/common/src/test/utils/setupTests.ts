@@ -1,4 +1,5 @@
-import 'jest-canvas-mock';
+import '@testing-library/jest-dom';
+
 Object.defineProperty(window, 'crypto', {
   value: {
     randomUUID: () => 'abc-abc-abc-abc-abc',

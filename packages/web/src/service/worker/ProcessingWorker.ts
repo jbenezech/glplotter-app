@@ -19,11 +19,19 @@ export const ProcessingWorker = (): ProcessingWorkerInterface => {
   let processingWorker: SharedWorker | Worker;
   if (hasSharedWorkerSupport()) {
     const socketWorker = new SharedWorker(
-      new URL('./shared/socket-worker.ts', import.meta.url)
+      new URL(
+        './shared/socket-worker.ts?sharedworker&name=shared',
+        import.meta.url
+      ),
+      {type: 'module'}
     );
 
     processingWorker = new SharedWorker(
-      new URL('./shared/data-worker.ts', import.meta.url)
+      new URL(
+        './shared/data-worker.ts?sharedworker&name=shared',
+        import.meta.url
+      ),
+      {type: 'module'}
     );
 
     processingWorker.port.postMessage(
@@ -37,7 +45,8 @@ export const ProcessingWorker = (): ProcessingWorkerInterface => {
     );
   } else {
     processingWorker = new Worker(
-      new URL('./basic/data-worker.ts', import.meta.url)
+      new URL('./basic/data-worker.ts?worker&inline', import.meta.url),
+      {type: 'module'}
     );
   }
 

@@ -2,7 +2,7 @@ import {ThemeProvider} from '@mui/material';
 import {render} from '@testing-library/react';
 import {LightTheme} from '../../themes';
 import {Text} from './Text';
-import '@testing-library/jest-dom';
+import {describe, it, expect} from 'vitest';
 
 describe('Text', () => {
   it('renders without crashing', () => {

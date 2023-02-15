@@ -1,19 +1,22 @@
 import {screen} from '@testing-library/react';
 import {renderWithTestProviders} from 'src/test/utils/ProviderWrapper';
-import '@testing-library/jest-dom';
 import {Info} from './Info';
+import {vi, describe, it, expect} from 'vitest';
 
-jest.mock('@Context/StateContext', () => ({
-  ...jest.requireActual<typeof import('@Context/StateContext')>(
-    '@Context/StateContext'
-  ),
-  InitialApplicationState: (): Record<string, unknown> => ({
-    glInfo: {
-      pointsPerWindow: 100,
-      gpuOverflow: false,
-    },
-  }),
-}));
+vi.mock('@Context/StateContext', async () => {
+  const originalContext = await vi.importActual<
+    typeof import('@Context/StateContext')
+  >('@Context/StateContext');
+  return {
+    ...originalContext,
+    InitialApplicationState: (): Record<string, unknown> => ({
+      glInfo: {
+        pointsPerWindow: 100,
+        gpuOverflow: false,
+      },
+    }),
+  };
+});
 
 describe('Info', () => {
   it('renders without crashing', () => {

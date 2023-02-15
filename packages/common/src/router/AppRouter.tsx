@@ -5,7 +5,10 @@ import {Settings} from '@Pages/settings/Settings';
 import {Session} from '@Pages/session/Session';
 
 export default function AppRouter(): ReactElement {
-  const basename = process.env.REACT_APP_BASE_URL || '/';
+  const basename = (import.meta.env.BASE_URL || '/').replace(
+    /^\.\/(.*)$/,
+    '$1'
+  );
   return (
     <BrowserRouter basename={basename}>
       <Routes>

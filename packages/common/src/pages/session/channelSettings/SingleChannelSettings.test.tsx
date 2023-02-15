@@ -1,5 +1,4 @@
 import {renderWithTestProviders} from 'src/test/utils/ProviderWrapper';
-import '@testing-library/jest-dom';
 import {ChannelsFormikValues} from './ChannelSettings';
 import {registerValidators} from '@Validation/Validators';
 import {ReactElement} from 'react';
@@ -10,11 +9,12 @@ import assert from 'assert';
 import {SingleChannelSettings} from './SingleChannelSettings';
 import {validationChannels} from './validation';
 import * as yup from 'yup';
+import {vi, describe, it, expect} from 'vitest';
 
 registerValidators();
 
-const handleDelete = jest.fn();
-const onSubmit = jest.fn();
+const handleDelete = vi.fn();
+const onSubmit = vi.fn();
 
 const values = {
   channels: [
@@ -66,12 +66,16 @@ const renderInForm = (): ReactElement => {
 };
 
 describe('SingleChannelSettings', () => {
+  afterEach(() => {
+    vi.clearAllMocks();
+  });
+
   it('renders without crashing', () => {
     const {container} = renderWithTestProviders(renderInForm());
     expect(container).toMatchSnapshot();
   });
 
-  it('calls delete on button click', () => {
+  it('calls delete on button click', async () => {
     const {container} = renderWithTestProviders(renderInForm());
 
     const button = container.querySelector(
@@ -80,7 +84,7 @@ describe('SingleChannelSettings', () => {
 
     assert(button !== null);
 
-    userEvent.click(button);
+    await userEvent.click(button);
     expect(handleDelete).toHaveBeenCalled();
   });
 
@@ -98,8 +102,8 @@ describe('SingleChannelSettings', () => {
     assert(input !== null);
     assert(form !== null);
 
-    userEvent.clear(input);
-    userEvent.type(input, 'Other channel');
+    await userEvent.clear(input);
+    await userEvent.type(input, 'Other channel');
 
     await act(() => form.submit());
 
@@ -115,8 +119,8 @@ describe('SingleChannelSettings', () => {
     assert(input !== null);
     assert(form !== null);
 
-    userEvent.clear(input);
-    userEvent.type(input, 'ch2');
+    await userEvent.clear(input);
+    await userEvent.type(input, 'ch2');
 
     await act(() => form.submit());
 
@@ -138,8 +142,8 @@ describe('SingleChannelSettings', () => {
     assert(input !== null);
     assert(form !== null);
 
-    userEvent.clear(input);
-    userEvent.type(input, 'ch2');
+    await userEvent.clear(input);
+    await userEvent.type(input, 'ch2');
 
     const autocomplete = input.parentElement;
     assert(autocomplete !== null);
@@ -171,17 +175,17 @@ describe('SingleChannelSettings', () => {
     assert(colorFieldButton !== null);
     assert(colorField !== null);
 
-    userEvent.click(colorFieldButton);
+    await userEvent.click(colorFieldButton);
 
-    userEvent.clear(screen.getByLabelText('#'));
+    await userEvent.clear(screen.getByLabelText('#'));
 
-    userEvent.type(screen.getByLabelText('#'), 'B92B2B');
+    await userEvent.type(screen.getByLabelText('#'), 'B92B2B');
 
     await waitFor(() => {
       expect(colorField.getAttribute('data-color')).toEqual('#b92b2b');
     });
 
-    userEvent.click(screen.getByText('OK'));
+    await userEvent.click(screen.getByText('OK'));
 
     await waitFor(() => {
       expect(screen.getByText('#b92b2b')).toBeInTheDocument();

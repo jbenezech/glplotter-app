@@ -2,10 +2,9 @@ import PlatformProvider from '@Context/PlatformProvider';
 import {act, render} from '@testing-library/react';
 import App from './App';
 import {PlatformContextMock} from './test/utils/PlatformContextMock';
+import {vi, describe, it, expect} from 'vitest';
 
-jest.mock('@Services/PlotterService');
-
-process.env.REACT_APP_DEBUG_MODE = 'true';
+vi.mock('@Services/PlotterService');
 
 describe('App', () => {
   it('renders without crashing', async () => {

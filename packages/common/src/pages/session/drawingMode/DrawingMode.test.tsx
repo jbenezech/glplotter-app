@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event';
 import assert from 'assert';
 import {renderWithTestProviders} from 'src/test/utils/ProviderWrapper';
 import {DrawingMode} from './DrawingMode';
-import '@testing-library/jest-dom';
+import {describe, it, expect} from 'vitest';
 
 describe('DrawingMode', () => {
   it('renders without crashing', () => {
@@ -11,7 +11,7 @@ describe('DrawingMode', () => {
     expect(container).toMatchSnapshot();
   });
 
-  it('switches icons when changing mode', () => {
+  it('switches icons when changing mode', async () => {
     const {container} = renderWithTestProviders(<DrawingMode />);
 
     expect(screen.getByTestId('PauseCircleIcon')).toBeInTheDocument();
@@ -19,7 +19,7 @@ describe('DrawingMode', () => {
     const button = container.querySelector('label');
     assert(button !== null);
 
-    userEvent.click(button);
+    await userEvent.click(button);
 
     expect(screen.getByTestId('PlayCircleIcon')).toBeInTheDocument();
   });

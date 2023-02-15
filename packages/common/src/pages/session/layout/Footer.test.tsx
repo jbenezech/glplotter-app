@@ -1,13 +1,13 @@
 import {screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import {renderWithTestProviders} from 'src/test/utils/ProviderWrapper';
-import '@testing-library/jest-dom';
 import {Footer} from './Footer';
 import {ReactElement} from 'react';
+import {vi, describe, it, expect} from 'vitest';
 
-const onSettings = jest.fn();
+const onSettings = vi.fn();
 
-jest.mock('../tabs/TabList', () => ({
+vi.mock('../tabs/TabList', () => ({
   TabList: (): ReactElement => <div data-testid="tabs" />,
 }));
 
@@ -25,10 +25,10 @@ describe('Footer', () => {
     expect(screen.getByTestId('tabs')).toBeInTheDocument();
   });
 
-  it('calls onSettings when clicking icon', () => {
+  it('calls onSettings when clicking icon', async () => {
     renderWithTestProviders(<Footer onSettings={onSettings} />);
 
-    userEvent.click(screen.getByTestId('footer-settings'));
+    await userEvent.click(screen.getByTestId('footer-settings'));
 
     expect(onSettings).toHaveBeenCalled();
   });

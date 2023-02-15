@@ -20,6 +20,6 @@ export const validationTab = (): yup.SchemaOf<{
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-member-access
-      .unique(i18n.t('tab-settings.error.unique-tab-id'), 'id'),
+      .unique(i18n.t('tabSettings.error.uniqueTabId'), 'id'),
   });
 };

@@ -111,7 +111,7 @@ export function ChannelSettings({
     >
       {(formikProps: FormikProps<ChannelsFormikValues>): JSX.Element => (
         <Form className={'w-75 m-auto'}>
-          <Text variant={'h1'}>{t('channel-settings.title')}</Text>
+          <Text variant={'h1'}>{t('channelSettings.title')}</Text>
           <div className="mt-5">
             {formikProps.values.channels.map((channel, index) => {
               return (

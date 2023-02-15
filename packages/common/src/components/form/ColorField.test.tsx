@@ -9,13 +9,13 @@ import {ColorField} from './ColorField';
 import {LightTheme} from '../../themes';
 import {ThemeProvider} from '@mui/material/styles';
 import userEvent from '@testing-library/user-event';
-import '@testing-library/jest-dom';
+import {vi, describe, it, expect} from 'vitest';
 
 const fieldMock: FieldInputProps<string | undefined> = {
   name: 'color',
   value: undefined,
-  onChange: jest.fn(),
-  onBlur: jest.fn(),
+  onChange: vi.fn(),
+  onBlur: vi.fn(),
 };
 const metaMock: FieldMetaProps<string | undefined> = {
   touched: false,
@@ -26,32 +26,35 @@ const metaMock: FieldMetaProps<string | undefined> = {
   value: '',
 };
 const helperMock: FieldHelperProps<string> = {
-  setValue: jest.fn(),
-  setError: jest.fn(),
-  setTouched: jest.fn(),
+  setValue: vi.fn(),
+  setError: vi.fn(),
+  setTouched: vi.fn(),
 };
 
 const formikContextMock: Partial<FormikContextType<string>> = {
-  setFieldTouched: jest.fn(),
-  setFieldValue: jest.fn(),
-  handleBlur: jest.fn(),
+  setFieldTouched: vi.fn(),
+  setFieldValue: vi.fn(),
+  handleBlur: vi.fn(),
 };
 
-const originalModule = jest.requireActual<typeof import('formik')>('formik');
-
-jest.mock('formik', () => ({
-  originalModule,
-  useField: jest.fn(() => {
-    return [fieldMock, metaMock, helperMock];
-  }),
-  useFormikContext: jest.fn(() => {
-    return formikContextMock;
-  }),
-}));
+vi.mock('formik', async () => {
+  const originalModule = await vi.importActual<typeof import('formik')>(
+    'formik'
+  );
+  return {
+    ...originalModule,
+    useField: vi.fn(() => {
+      return [fieldMock, metaMock, helperMock];
+    }),
+    useFormikContext: vi.fn(() => {
+      return formikContextMock;
+    }),
+  };
+});
 
 describe('ColorField', () => {
   it('renders without crashing', () => {
-    const wrapper = jest.mocked(<ColorField name="color" />, {shallow: true});
+    const wrapper = vi.mocked(<ColorField name="color" />);
     expect(wrapper).toMatchSnapshot();
   });
 
@@ -76,11 +79,11 @@ describe('ColorField', () => {
       </ThemeProvider>
     );
 
-    userEvent.click(screen.getByTestId('colorfield-palette'));
+    await userEvent.click(screen.getByTestId('colorfield-palette'));
 
-    userEvent.clear(screen.getByLabelText('#'));
+    await userEvent.clear(screen.getByLabelText('#'));
 
-    userEvent.type(screen.getByLabelText('#'), '22194D');
+    await userEvent.type(screen.getByLabelText('#'), '22194D');
 
     await waitFor(() => {
       expect(
@@ -88,7 +91,7 @@ describe('ColorField', () => {
       ).toEqual('#22194d');
     });
 
-    userEvent.click(screen.getByText('OK'));
+    await userEvent.click(screen.getByText('OK'));
 
     await waitFor(() => {
       expect(formikContextMock.setFieldTouched).toHaveBeenCalledWith(
@@ -113,7 +116,7 @@ describe('ColorField', () => {
       </ThemeProvider>
     );
 
-    userEvent.click(screen.getByTestId('colorfield-delete'));
+    await userEvent.click(screen.getByTestId('colorfield-delete'));
 
     await waitFor(() => {
       expect(formikContextMock.setFieldTouched).toHaveBeenCalledWith(
@@ -144,18 +147,18 @@ describe('ColorField', () => {
     });
   });
 
-  it('closes picker on cancel', () => {
+  it('closes picker on cancel', async () => {
     render(
       <ThemeProvider theme={LightTheme}>
         <ColorField name="color" />
       </ThemeProvider>
     );
 
-    userEvent.click(screen.getByTestId('colorfield-palette'));
+    await userEvent.click(screen.getByTestId('colorfield-palette'));
 
     const cancelButton = screen.getByText('Cancel');
 
-    userEvent.click(cancelButton);
+    await userEvent.click(cancelButton);
 
     expect(cancelButton).not.toBeInTheDocument();
   });

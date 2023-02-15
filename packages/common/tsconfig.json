@@ -7,7 +7,7 @@
     "declaration": true,
     "emitDeclarationOnly": true,
     "sourceMap": true,
-    "declarationDir": "dist",
+    "declarationDir": "dist"
   },
   "include": [
     "src",

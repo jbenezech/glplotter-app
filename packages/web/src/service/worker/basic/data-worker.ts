@@ -5,7 +5,10 @@ import {
   WorkerOutgoingMessage,
 } from '../Messages';
 
-const socketWorker = new Worker(new URL('./socket-worker.ts', import.meta.url));
+const socketWorker = new Worker(
+  new URL('./socket-worker.ts?worker', import.meta.url),
+  {type: 'module'}
+);
 
 const dataChannel = new BroadcastChannel(DATA_CHANNEL);
 

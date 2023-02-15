@@ -10,11 +10,12 @@
   "include": [
     "src/",
     "src/**/*",
-    "webpack.config.ts"
+    "vite.config.ts"
   ],
   "exclude": [
     "public",
     "build",
+    "scripts",
     "node_modules",
     "test"
   ],
@@ -22,7 +23,10 @@
     "esm": true,
     "compilerOptions": {
       "module": "CommonJS",
-      "moduleResolution": "NodeNext"
+      "moduleResolution": "NodeNext",
+      "paths": {
+        "@ECommon/*": ["src/common/*"],
+      }
     }
-  }
+  },
 }

@@ -5,6 +5,7 @@ import {
 import {InitialApplicationState} from '@Context/StateContext';
 import {LightTheme} from 'src/themes';
 import {signalReducer} from '../SignalReducer';
+import {vi, describe, it, expect} from 'vitest';
 
 const stateTemplate = InitialApplicationState(LightTheme);
 const state = {
@@ -67,7 +68,7 @@ describe('SignalReducer', () => {
       right: 0,
       bottom: 0,
       left: 0,
-      toJSON: jest.fn(),
+      toJSON: vi.fn(),
     };
 
     it('updates signal position', () => {

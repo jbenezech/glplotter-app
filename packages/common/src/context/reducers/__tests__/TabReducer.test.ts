@@ -7,6 +7,7 @@ import {
 import {InitialApplicationState, Signal, Tab} from '@Context/StateContext';
 import {LightTheme} from 'src/themes';
 import {tabReducer} from '../TabReducer';
+import {describe, it, expect} from 'vitest';
 
 const stateTemplate = InitialApplicationState(LightTheme);
 const state = {
